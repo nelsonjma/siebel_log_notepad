@@ -1,0 +1,241 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<events>
+	<in_out_events>
+		<in_out_event>
+			<sample>
+				ObjMgrDataObjLog	Execute	4	2011-12-19 14:14:37	Begin: Execute Data Object 10234de0 - 'Login User'
+				ObjMgrDataObjLog	Execute	4	2011-12-19 14:14:38	End: execute Data Object 10234de0
+			</sample>
+			<image>select.png</image>
+			<level_0>ObjMgrDataObjLog</level_0>
+			<in>
+				<level_1>Execute</level_1>
+				<level_2>
+					<search>
+						starts_with('Begin: Execute Data Object');
+				  </search>
+					<replace_criteria>
+						from_start_remove_from_to('- '');
+						from_end_remove_from_to(''');
+					</replace_criteria>
+				</level_2>
+			</in>
+			<out>
+				<level_1>Execute</level_1>
+				<level_2>
+					<search>
+						starts_with('End: execute Data Object');
+				  </search>
+					<replace_criteria></replace_criteria>
+				</level_2>
+			</out>
+			<build>Execute Data Object: {IN}</build>
+		</in_out_event>
+		<in_out_event>
+			<sample>
+				ObjMgrBusServiceLog	InvokeMethod	4	2011-10-20 12:31:10	Begin: Business Service 'Web Engine Interface' invoke method: 'Request' 43664bc0
+				ObjMgrBusServiceLog	InvokeMethod	4	2011-10-20 12:31:10	End: Business Service invoke method: 43664bc0
+			</sample>
+			<image>bsm.png</image>
+			<level_0>ObjMgrBusServiceLog</level_0>
+			<in>
+				<level_1>InvokeMethod</level_1>
+				<level_2>
+					<search>starts_with('Begin: Business Service');</search>
+					<replace_criteria>
+						replace('Begin: Business Service '','BS: ');
+						replace('' invoke method: '',' Method ');
+						from_end_remove_from_to(''');
+					</replace_criteria>
+				</level_2>
+			</in>
+			<out>
+				<level_1>InvokeMethod</level_1>
+				<level_2>
+					<search>starts_with('End: Business Service invoke method');</search>
+					<replace_criteria></replace_criteria>
+				</level_2>
+			</out>
+			<build>{IN}</build>
+		</in_out_event>
+		<in_out_event>
+			<sample>
+				ObjMgrBusServiceLog	Create	4	2011-10-20 12:31:10	Business Service 'Web Engine UI Preferences' was created 3a3b1158
+				ObjMgrBusServiceLog	Delete	4	2011-10-20 12:31:10	Business Service was deleted 3a3b1158
+			</sample>
+			<image>bs.png</image>
+			<level_0>ObjMgrBusServiceLog</level_0>
+			<in>
+				<level_1>Create</level_1>
+				<level_2>
+					<search>starts_with('Business Service');</search>
+					<replace_criteria>
+						from_start_remove_from_to(''');
+						from_end_remove_from_to(''');
+					</replace_criteria>
+				</level_2>
+			</in>
+			<out>
+				<level_1>Delete</level_1>
+				<level_2>
+					<search>starts_with('Business Service was deleted');</search>
+					<replace_criteria></replace_criteria>
+				</level_2>
+			</out>
+			<build>BS: {IN}</build>
+		</in_out_event>
+		<in_out_event>
+			<sample>
+				ObjMgrBusCompLog	Create	4	2011-10-20 10:48:46	Begin: construct BusComp 43410008 "CommSrv CM Agent General Profile"
+				ObjMgrBusCompLog	Delete	4	2011-10-20 10:48:47	BusComp was deleted 52543008 "CommSrv CM Configurations"
+			</sample>
+			<image>bc.png</image>
+			<level_0>ObjMgrBusCompLog</level_0>
+			<in>
+				<level_1>Create</level_1>
+				<level_2>
+					<search>starts_with('Begin: construct BusComp');</search>
+					<replace_criteria>
+						from_start_remove_from_to('"');
+						from_end_remove_from_to('"');
+					</replace_criteria>
+				</level_2>
+			</in>
+			<out>
+				<level_1>Delete</level_1>
+				<level_2>
+					<search>starts_with('BusComp was deleted ');</search>
+					<replace_criteria></replace_criteria>
+				</level_2>
+			</out>
+			<build>{IN}</build>
+		</in_out_event>
+		<in_out_event>
+			<sample>
+				Begin: ExecuteStmt for Cursor 22ffca80
+				End: ExecuteStmt for Cursor 22ffca80
+			</sample>
+			<image>cursor.png</image>
+			<level_0>ObjMgrDataObjLog</level_0>
+			<in>
+				<level_1>ExecStmt</level_1>
+				<level_2>
+					<search>starts_with('Begin: ExecuteStmt for Cursor');</search>
+					<replace_criteria></replace_criteria>
+				</level_2>
+			</in>
+			<out>
+				<level_1>ExecStmt</level_1>
+				<level_2>
+					<search>starts_with('End: ExecuteStmt for Cursor');</search>
+					<replace_criteria></replace_criteria>
+				</level_2>
+			</out>
+			<build>Execute Cursor</build>
+		</in_out_event>
+		<in_out_event>
+			<sample>
+				PrcExec	Create		A criar a instÃ¢ncia da definiÃ§Ã£o do processo 'TVC IOOA EIL WF'.
+				PrcExec	End			A parar a instÃ¢ncia do processo 'TVC IOIA Log File WF' com um estado 'ConcluÃ­do'.
+			</sample>
+			<image>cursor.png</image>
+			<level_0>PrcExec</level_0>
+			<in>
+				<level_1>Create</level_1>
+				<level_2>
+					<search>starts_with('A criar a');</search>
+					<replace_criteria>
+						from_start_remove_from_to(''');
+						from_end_remove_from_to(''');
+					</replace_criteria>
+				</level_2>
+			</in>
+			<out>
+				<level_1>End</level_1>
+				<level_2>
+					<search>starts_with('A parar a');</search>
+					<replace_criteria>
+						from_start_remove_from_to(''');
+						from_end_remove_from_to(''');
+					</replace_criteria>
+				</level_2>
+			</out>
+			<build>{IN} PARA REMOVER {OUT}</build>
+		</in_out_event>
+		<in_out_event>
+			<sample>
+				PrcExec	Create		A criar a instÃ¢ncia da definiÃ§Ã£o do processo 'TVC IOOA EIL WF'.
+				PrcExec	End			A parar a instÃ¢ncia do processo 'TVC IOIA Log File WF' com um estado 'ConcluÃ­do'.
+			</sample>
+			<image>cursor.png</image>
+			<level_0>PrcExec</level_0>
+			<in>
+				<level_1>Create</level_1>
+				<level_2>
+					<search>starts_with('A criar a');</search>
+					<replace_criteria>
+						from_start_remove_from_to(''');
+						from_end_remove_from_to(''');
+					</replace_criteria>
+				</level_2>
+			</in>
+			<out>
+				<level_1>End</level_1>
+				<level_2>
+					<search>starts_with('A parar a');</search>
+					<replace_criteria>
+						from_start_remove_from_to(''');
+						from_end_remove_from_to(''');
+					</replace_criteria>
+				</level_2>
+			</out>
+			<build>{IN} ({OUT})</build>
+		</in_out_event>		
+		<in_out_event>
+			<sample>
+				StpExec	Create		A criar a instÃ¢ncia da definiÃ§Ã£o do passo 'DB Has record?'.
+				StpExec	End			A parar a instÃ¢ncia do passo 'DB Conn Pooling Wait Step' com um estado 'ConcluÃ­do'.
+			</sample>
+			<image>cursor.png</image>
+			<level_0>StpExec</level_0>
+			<in>
+				<level_1>Create</level_1>
+				<level_2>
+					<search>starts_with('A criar a');</search>
+					<replace_criteria>
+						from_start_remove_from_to(''');
+						from_end_remove_from_to(''');
+					</replace_criteria>
+				</level_2>
+			</in>
+			<out>
+				<level_1>End</level_1>
+				<level_2>
+					<search>starts_with('A parar a');</search>
+					<replace_criteria>
+						from_start_remove_from_to(''');
+						from_end_remove_from_to(''');
+					</replace_criteria>
+				</level_2>
+			</out>
+			<build>{IN} ({OUT})</build>
+		</in_out_event>			
+	</in_out_events>		
+
+	<neutral_events>
+		<neutral_event>
+			<sample>
+				ObjMgrLog	Error	4	2011-12-19 14:14:37	(SBL-DAT-00523) O registo seleccionado foi modificado por outro utilizador desde que foi recuperado. Continue.
+			</sample>
+			<image>error.png</image>
+			<level_0></level_0>
+			<level_1>Error</level_1>
+			<level_2>
+				<search></search>
+				<replace_criteria></replace_criteria>
+				<ignore_criteria>contains('Este objecto está');</ignore_criteria>
+			</level_2>
+			<build>{MSG}</build>
+		</neutral_event>
+	</neutral_events>
+</events>

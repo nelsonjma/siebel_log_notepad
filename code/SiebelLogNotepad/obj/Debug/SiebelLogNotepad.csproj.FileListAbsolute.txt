@@ -1,0 +1,13 @@
+C:\Users\xyon\Desktop\Codigo\dotNet\SiebelLogNotepad\SiebelLogNotepad\bin\Debug\SiebelLogNotepad.exe
+C:\Users\xyon\Desktop\Codigo\dotNet\SiebelLogNotepad\SiebelLogNotepad\bin\Debug\SiebelLogNotepad.pdb
+C:\Users\xyon\Desktop\Codigo\dotNet\SiebelLogNotepad\SiebelLogNotepad\obj\Debug\SiebelLogNotepad.csprojResolveAssemblyReference.cache
+C:\Users\xyon\Desktop\Codigo\dotNet\SiebelLogNotepad\SiebelLogNotepad\obj\Debug\SiebelLogNotepad.FormNotepad.resources
+C:\Users\xyon\Desktop\Codigo\dotNet\SiebelLogNotepad\SiebelLogNotepad\obj\Debug\SiebelLogNotepad.Properties.Resources.resources
+C:\Users\xyon\Desktop\Codigo\dotNet\SiebelLogNotepad\SiebelLogNotepad\obj\Debug\SiebelLogNotepad.csproj.GenerateResource.Cache
+C:\Users\xyon\Desktop\Codigo\dotNet\SiebelLogNotepad\SiebelLogNotepad\obj\Debug\SiebelLogNotepad.exe
+C:\Users\xyon\Desktop\Codigo\dotNet\SiebelLogNotepad\SiebelLogNotepad\obj\Debug\SiebelLogNotepad.pdb
+C:\Users\xyon\Desktop\Codigo\dotNet\SiebelLogNotepad\SiebelLogNotepad\obj\Debug\SiebelLogNotepad.Resources.resources
+C:\Users\xyon\Desktop\Codigo\dotNet\SiebelLogNotepad\SiebelLogNotepad\obj\Debug\SiebelLogNotepad.forms.IgnoreEvents.resources
+C:\Users\xyon\Desktop\Codigo\dotNet\SiebelLogNotepad\SiebelLogNotepad\obj\Debug\SiebelLogNotepad.forms.MarkAndFind.resources
+C:\Users\xyon\Desktop\Codigo\dotNet\SiebelLogNotepad\SiebelLogNotepad\bin\Debug\FastColoredTextBox.dll
+C:\Users\xyon\Desktop\Codigo\dotNet\SiebelLogNotepad\SiebelLogNotepad\bin\Debug\FastColoredTextBox.xml
