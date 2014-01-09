@@ -18,6 +18,24 @@ namespace SiebelLogNotepad
 {
     public partial class FormNotepad : Form
     {
+        // sintax highlight
+        private TextStyle _boldStyle;
+        private TextStyle _italicStyle;
+        private TextStyle _blueStyle;
+        private TextStyle _greenStyle;
+        private TextStyle _darkredStyle;
+        private TextStyle _darkorangeStyle;
+        private TextStyle _darkvioletStyle;
+        
+
+        private string _boldStyleText;
+        private string _italicStyleText;
+        private string _blueStyleText;
+        private string _greenStyleText;
+        private string _darkredStyleText;
+        private string _darkorangeStyleText;
+        
+
         // siebel log file
         private string _openLogFile;
         
@@ -57,6 +75,9 @@ namespace SiebelLogNotepad
 
             // Initialize TextBox
             InitializeFastColoredTextBox();
+
+            // Initialize TextBox SintaxHighLight
+            InitializeSintraxHighlight();
 
             // store form header text
             _originalFormHeaderText = base.Text;
@@ -140,6 +161,8 @@ namespace SiebelLogNotepad
                     Zoom = 100
                 };
 
+                _fastColorTb.VisibleRangeChangedDelayed += FastColorTextBox_VisibleRangeChangedDelayed;
+
                 panelTextBox.Controls.Add(_fastColorTb);
             }
             catch (Exception ex)
@@ -192,6 +215,63 @@ namespace SiebelLogNotepad
             th.Start();
 
             while (!th.IsAlive) Thread.Sleep(1);
+        }
+
+        /*************** Fast Colored TextBox Sintax Highlight ***************/
+        /// <summary>
+        /// Initialize sintax highlight
+        /// </summary>
+        private void InitializeSintraxHighlight()
+        {
+            _boldStyle          = new TextStyle(null, null, FontStyle.Bold | FontStyle.Underline);
+            _italicStyle        = new TextStyle(null, null, FontStyle.Bold | FontStyle.Italic);
+            _blueStyle          = new TextStyle(Brushes.Blue, null, FontStyle.Bold);
+            _greenStyle         = new TextStyle(Brushes.Green, null, FontStyle.Bold | FontStyle.Italic);
+            _darkredStyle       = new TextStyle(Brushes.DarkRed, null, FontStyle.Bold);
+            _darkorangeStyle    = new TextStyle(Brushes.DarkOrange, null, FontStyle.Bold);
+            _darkvioletStyle    = new TextStyle(Brushes.DarkViolet, null, FontStyle.Bold);
+
+            _boldStyleText          = string.Empty; try { _boldStyleText        = RwFile.ReadXml(_defaultPath + @"\cfg\sintax_highlight.xml", "bold")[0]; } catch {}
+            _italicStyleText        = string.Empty; try { _italicStyleText      = RwFile.ReadXml(_defaultPath + @"\cfg\sintax_highlight.xml", "italic")[0]; } catch { }
+            _blueStyleText          = string.Empty; try { _blueStyleText        = RwFile.ReadXml(_defaultPath + @"\cfg\sintax_highlight.xml", "blue")[0]; } catch { }
+            _greenStyleText         = string.Empty; try { _greenStyleText       = RwFile.ReadXml(_defaultPath + @"\cfg\sintax_highlight.xml", "green")[0]; } catch { }
+            _darkredStyleText       = string.Empty; try { _darkredStyleText     = RwFile.ReadXml(_defaultPath + @"\cfg\sintax_highlight.xml", "darkred")[0]; } catch { }
+            _darkorangeStyleText    = string.Empty; try { _darkorangeStyleText  = RwFile.ReadXml(_defaultPath + @"\cfg\sintax_highlight.xml", "darkorange")[0]; } catch { }
+        }
+
+        /// <summary>
+        /// Apply sintax highlight
+        /// </summary>
+        private void SintraxHighlightVisibleRange()
+        {
+            const int margin = 2000;
+
+            //expand visible range (+- margin)
+            var startLine = Math.Max(0, _fastColorTb.VisibleRange.Start.iLine - margin);
+            var endLine = Math.Min(_fastColorTb.LinesCount - 1, _fastColorTb.VisibleRange.End.iLine + margin);
+            var range = new Range(_fastColorTb, 0, startLine, 0, endLine);
+            
+            //clear folding markers
+            //range.ClearFoldingMarkers();
+            
+            //set markers for folding
+            //range.SetFoldingMarkers(@"N\d\d00", @"N\d\d99");
+            
+            //range.ClearStyle(StyleIndex.All);
+
+            range.SetStyle(_darkvioletStyle, @"N\d+");
+
+            if (_boldStyleText != string.Empty) range.SetStyle(_boldStyle, _boldStyleText);
+            if (_italicStyleText != string.Empty) range.SetStyle(_italicStyle, _italicStyleText);
+            if (_blueStyleText != string.Empty) range.SetStyle(_blueStyle, _blueStyleText);
+            if (_greenStyleText != string.Empty) range.SetStyle(_greenStyle, _greenStyleText);
+            if (_darkredStyleText != string.Empty) range.SetStyle(_darkredStyle, _darkredStyleText);
+            if (_darkorangeStyleText != string.Empty) range.SetStyle(_darkorangeStyle, _darkorangeStyleText);
+        }
+
+        private void FastColorTextBox_VisibleRangeChangedDelayed(object sender, EventArgs e)
+        {
+            SintraxHighlightVisibleRange();
         }
 
         /*********************************** Find Next Tree Events ***********************************/
@@ -367,7 +447,7 @@ namespace SiebelLogNotepad
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Load Tree", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, @"Load Tree", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -622,6 +702,18 @@ namespace SiebelLogNotepad
 
             MarkAndFind maf = new MarkAndFind(this);
             maf.Show();
+        }
+
+        // node mouse double click
+        private void treeViewSiebelTree_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            SiebelTreeNode stn = (SiebelTreeNode) e.Node;
+
+            if (stn == null || stn.EventData == null || stn.EventData.Line <= 0) return;
+
+            _fastColorTb.Navigate(stn.EventData.Line);
+            _fastColorTb.Focus();
+            SendKeys.SendWait("{DOWN}");
         }
     }
 }

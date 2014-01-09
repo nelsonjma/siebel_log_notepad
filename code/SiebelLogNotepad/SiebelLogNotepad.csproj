@@ -54,6 +54,7 @@
     <Compile Include="class\event_type_cfg\event_type_list.cs" />
     <Compile Include="class\event_type_cfg\level2_process.cs" />
     <Compile Include="class\generic\dialog_box.cs" />
+    <Compile Include="class\generic\read_xml.cs" />
     <Compile Include="FormNotepad.cs">
       <SubType>Form</SubType>
     </Compile>

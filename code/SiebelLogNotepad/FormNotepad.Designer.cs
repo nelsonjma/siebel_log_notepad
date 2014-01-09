@@ -228,6 +228,7 @@
             this.treeViewSiebelTree.Name = "treeViewSiebelTree";
             this.treeViewSiebelTree.Size = new System.Drawing.Size(369, 526);
             this.treeViewSiebelTree.TabIndex = 0;
+            this.treeViewSiebelTree.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewSiebelTree_NodeMouseDoubleClick);
             // 
             // panelTextBox
             // 

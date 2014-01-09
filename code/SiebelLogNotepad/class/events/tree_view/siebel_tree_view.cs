@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using EventTypeCfg;
@@ -180,7 +181,7 @@ namespace Events.TreeView
             try
             {
                 FileStream fs = new FileStream(logFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                StreamReader sr = new StreamReader(fs);
+                StreamReader sr = new StreamReader(fs, Encoding.UTF8);
 
                 // Get file length
                 _eventLoadMutex.WaitOne();
@@ -202,11 +203,21 @@ namespace Events.TreeView
                 // log deep level indicator
                 int level = 0;
 
+                string lastline = string.Empty;
+
                 while (!sr.EndOfStream)
                 {
                     curLinePos++;
                     curStreamPos = fs.Position;
                     string curLine = sr.ReadLine();
+                    
+                    // this is used because siebel logs are stupid or fast text color is stupid and adds lines that it does not need
+                    // THIS NEEDS TO BE IN CONFIG FILE SO THAT USER CAN CONFIGURE IT.
+                    if (curLine == string.Empty && lastline != string.Empty)
+                        curLinePos--;
+                        
+                    // last line
+                    lastline = curLine;
 
                     // if nothing to do leave
                     if (curLine == null || curLine.IndexOf('\t') <= 0) continue;
