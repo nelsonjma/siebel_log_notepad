@@ -44,6 +44,7 @@
             this.panelTreeView = new System.Windows.Forms.Panel();
             this.treeViewSiebelTree = new System.Windows.Forms.TreeView();
             this.panelTextBox = new System.Windows.Forms.Panel();
+            this.buttonGoToLine = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
             this.splitContainerMain.Panel1.SuspendLayout();
             this.splitContainerMain.Panel2.SuspendLayout();
@@ -79,6 +80,7 @@
             // 
             // panelButtons
             // 
+            this.panelButtons.Controls.Add(this.buttonGoToLine);
             this.panelButtons.Controls.Add(this.buttonChangeTree);
             this.panelButtons.Controls.Add(this.buttonCollapse);
             this.panelButtons.Controls.Add(this.buttonExpandTree);
@@ -228,7 +230,7 @@
             this.treeViewSiebelTree.Name = "treeViewSiebelTree";
             this.treeViewSiebelTree.Size = new System.Drawing.Size(369, 526);
             this.treeViewSiebelTree.TabIndex = 0;
-            this.treeViewSiebelTree.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewSiebelTree_NodeMouseDoubleClick);
+            this.treeViewSiebelTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewSiebelTree_NodeMouseClick);
             // 
             // panelTextBox
             // 
@@ -237,6 +239,18 @@
             this.panelTextBox.Name = "panelTextBox";
             this.panelTextBox.Size = new System.Drawing.Size(605, 526);
             this.panelTextBox.TabIndex = 0;
+            // 
+            // buttonGoToLine
+            // 
+            this.buttonGoToLine.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.buttonGoToLine.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonGoToLine.Location = new System.Drawing.Point(275, 2);
+            this.buttonGoToLine.Name = "buttonGoToLine";
+            this.buttonGoToLine.Size = new System.Drawing.Size(57, 24);
+            this.buttonGoToLine.TabIndex = 10;
+            this.buttonGoToLine.Text = "Go To Line";
+            this.buttonGoToLine.UseVisualStyleBackColor = true;
+            this.buttonGoToLine.Click += new System.EventHandler(this.buttonGoToLine_Click);
             // 
             // FormNotepad
             // 
@@ -279,6 +293,7 @@
         private System.Windows.Forms.Button buttonCollapse;
         private System.Windows.Forms.Button buttonExpandTree;
         private System.Windows.Forms.Button buttonChangeTree;
+        private System.Windows.Forms.Button buttonGoToLine;
     }
 }
 

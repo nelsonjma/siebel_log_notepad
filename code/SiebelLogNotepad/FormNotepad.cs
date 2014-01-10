@@ -53,7 +53,11 @@ namespace SiebelLogNotepad
         private SiebelTreeNode _findedSiebelTreeNode;
         private readonly List<int> _findedSiebelNodePos;
 
+        // textbox
         private FastColoredTextBox _fastColorTb;
+
+        // go to line
+        private int _linePosition;
 
         public FormNotepad()
         {
@@ -85,6 +89,9 @@ namespace SiebelLogNotepad
             // find next initialization
             _findedSiebelTreeNode = null;
             _findedSiebelNodePos = new List<int>();
+
+            // set the default line = to a line that does not exists
+            _linePosition = -1;
         }
 
         /// <summary>
@@ -649,6 +656,8 @@ namespace SiebelLogNotepad
             try
             {
                 treeViewSiebelTree.ExpandAll();
+
+                MessageBox.Show(@"Done", @"Expand Tree", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             catch (Exception ex)
             {
@@ -704,16 +713,23 @@ namespace SiebelLogNotepad
             maf.Show();
         }
 
-        // node mouse double click
-        private void treeViewSiebelTree_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        // node mouse click
+        private void treeViewSiebelTree_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            SiebelTreeNode stn = (SiebelTreeNode) e.Node;
+            SiebelTreeNode stn = (SiebelTreeNode)e.Node;
 
             if (stn == null || stn.EventData == null || stn.EventData.Line <= 0) return;
 
-            _fastColorTb.Navigate(stn.EventData.Line);
+            _linePosition = stn.EventData.Line;
+        }
+
+        private void buttonGoToLine_Click(object sender, EventArgs e)
+        {
+            if (_linePosition == -1) return;
+
+            _fastColorTb.Navigate(_linePosition);
             _fastColorTb.Focus();
-            SendKeys.SendWait("{DOWN}");
+            SendKeys.SendWait("{RIGHT}");
         }
     }
 }

@@ -181,11 +181,12 @@ namespace Events.TreeView
             try
             {
                 FileStream fs = new FileStream(logFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                StreamReader sr = new StreamReader(fs, Encoding.UTF8);
+                long fileLenght = fs.Length;
+                //StreamReader sr = new StreamReader(fs, Encoding.UTF8);
 
                 // Get file length
                 _eventLoadMutex.WaitOne();
-                _logFilelength = fs.Length;
+                _logFilelength = fileLenght;
                 _eventLoadMutex.ReleaseMutex();
 
                 // Loads xml config file
@@ -195,29 +196,35 @@ namespace Events.TreeView
                 InitializeEventInOutQueue();
 
                 // current line position
-                int curLinePos = 0;
-
-                // current strem caracter position
-                long curStreamPos;
+                int curLinePos = -1;
 
                 // log deep level indicator
                 int level = 0;
 
-                string lastline = string.Empty;
+                // line position storate
+                List<long> fileStartPos = new List<long> {0};
 
-                while (!sr.EndOfStream)
+                // get starting line positions
+                while (fs.Position < fileLenght)
                 {
-                    curLinePos++;
-                    curStreamPos = fs.Position;
+                    // new line \n
+                    if (fs.ReadByte() != 10) continue;
+
+                    fileStartPos.Add(fs.Position);
+                }
+
+                // process lines
+                foreach (long filePos in fileStartPos)
+                {
+                    long curStreamPos = filePos;
+
+                    fs.Seek(filePos, SeekOrigin.Begin);
+                    StreamReader sr = new StreamReader(fs, Encoding.UTF8);
+
                     string curLine = sr.ReadLine();
-                    
-                    // this is used because siebel logs are stupid or fast text color is stupid and adds lines that it does not need
-                    // THIS NEEDS TO BE IN CONFIG FILE SO THAT USER CAN CONFIGURE IT.
-                    if (curLine == string.Empty && lastline != string.Empty)
-                        curLinePos--;
-                        
-                    // last line
-                    lastline = curLine;
+
+                    // increment line
+                    curLinePos++;
 
                     // if nothing to do leave
                     if (curLine == null || curLine.IndexOf('\t') <= 0) continue;
@@ -267,11 +274,10 @@ namespace Events.TreeView
 
                     // sends current log position to variable so that it can be used to get percentage
                     _eventLoadMutex.WaitOne();
-                    if (curLinePos%500 == 0)
+                    if (curLinePos%500 == 0) 
                         _logFileCurPos = curStreamPos;
 
-                    if (_eventLoadStop)
-                        break;
+                    if (_eventLoadStop) break;
 
                     _eventLoadMutex.ReleaseMutex();
                 }
