@@ -14,6 +14,9 @@ namespace SiebelLogNotepad.forms
         // default color
         private Color _defaultColor;
 
+        // default text
+        private string _selectedText;
+
         // connect to notepad form to execute mark and find methods
         private readonly FormNotepad _fn;
 
@@ -29,8 +32,22 @@ namespace SiebelLogNotepad.forms
 
             // connect to notepad form to execute mark and find methods
             _fn = fn;
+
+            // initialize selected text
+            _selectedText = string.Empty;
         }
 
+        /// <summary>
+        ///  If is new text then restart find variables
+        /// </summary>
+        private void CheckIfNewText()
+        {
+            if (_selectedText != textBoxFind.Text)
+                _fn.InitializeFindVariables();
+
+            // send text to buffer so that in can be compared in the next button click;
+            _selectedText = textBoxFind.Text;
+        }
 
         /*********************************** Button Ctrls ***********************************/
         // Change color 
@@ -56,8 +73,16 @@ namespace SiebelLogNotepad.forms
         {
             try
             {
-                if (radioButtonTree.Checked && textBoxFind.Text != string.Empty)
+                CheckIfNewText();
+
+                if (textBoxFind.Text == string.Empty) return;
+
+                if (radioButtonTree.Checked)
                     _fn.MarkTreeNode(textBoxFind.Text, _defaultColor);
+                else
+                    _fn.MarkTextBox(textBoxFind.Text, _defaultColor);
+
+                MessageBox.Show(@"Done", @"Mark", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             catch (Exception ex)
             {
@@ -65,12 +90,19 @@ namespace SiebelLogNotepad.forms
             }
         }
 
+        // find in the tree or the textbox
         private void buttonFindNext_Click(object sender, EventArgs e)
         {
             try
             {
-                if (radioButtonTree.Checked && textBoxFind.Text != string.Empty)
-                    _fn.Find(textBoxFind.Text, _defaultColor);
+                CheckIfNewText();
+
+                if (textBoxFind.Text == string.Empty) return;
+
+                if (radioButtonTree.Checked)
+                    _fn.FindInTree(textBoxFind.Text, _defaultColor);
+                else
+                    _fn.FindInTextBox(textBoxFind.Text, _defaultColor);
             }
             catch (Exception ex)
             {

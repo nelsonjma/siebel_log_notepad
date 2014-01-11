@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 using Events.TreeView;
@@ -49,9 +50,14 @@ namespace SiebelLogNotepad
 
         private BackgroundWorker _eventLoadBackgroundWorker;
 
-        // find next events
+        // find in tree
         private SiebelTreeNode _findedSiebelTreeNode;
-        private readonly List<int> _findedSiebelNodePos;
+        private List<int> _findedSiebelNodePos;
+
+        // find in text
+        private List<int> _findedInTextBox;
+        private int _findedInTextBoxPos;
+        private string _findedInTextBoxValue;
 
         // textbox
         private FastColoredTextBox _fastColorTb;
@@ -86,9 +92,8 @@ namespace SiebelLogNotepad
             // store form header text
             _originalFormHeaderText = base.Text;
 
-            // find next initialization
-            _findedSiebelTreeNode = null;
-            _findedSiebelNodePos = new List<int>();
+            // initialize find 
+            InitializeFindVariables();
 
             // set the default line = to a line that does not exists
             _linePosition = -1;
@@ -137,6 +142,24 @@ namespace SiebelLogNotepad
 
         }
 
+        /*********************************** Go To Line / Add Color To Text ***********************************/
+        /// <summary>
+        /// Move to line in textbox
+        /// </summary>
+        private void GoToTextBoxLine(int line)
+        {
+            _fastColorTb.Navigate(line);
+            _fastColorTb.Focus();
+            SendKeys.SendWait("{RIGHT}");
+        }
+
+        private void BookmarkLine(int line, Color clr)
+        {
+            _fastColorTb.BookmarkColor = clr;
+
+            _fastColorTb.BookmarkLine(line);
+        }
+
         /*********************************** Fast Colored TextBox ***********************************/
         /// <summary>
         /// Initialize Fast Color TextBox
@@ -165,7 +188,7 @@ namespace SiebelLogNotepad
                     SelectionColor = Color.FromArgb(50, 0, 0, 255),
                     Size = new Size(100, 100),
                     TabIndex = 0,
-                    Zoom = 100
+                    Zoom = 100,
                 };
 
                 _fastColorTb.VisibleRangeChangedDelayed += FastColorTextBox_VisibleRangeChangedDelayed;
@@ -283,16 +306,59 @@ namespace SiebelLogNotepad
 
         /*********************************** Find Next Tree Events ***********************************/
         /// <summary>
+        /// Find text in textbox
+        /// </summary>
+        public void FindInTextBox(string value, Color clr)
+        {
+            // if text is equal then find next
+            if (_findedInTextBoxValue == value)
+            {
+                FindInTextBox(clr); return;
+            }
+
+            // if != then store value
+            _findedInTextBoxValue = value;
+
+            // get lines
+            _findedInTextBox = _fastColorTb.FindLines(value, RegexOptions.IgnoreCase);
+
+            // initialize current position
+            _findedInTextBoxPos = 0;
+
+            // find line and then move to next
+            FindInTextBox(clr);
+        }
+
+        public void FindInTextBox(Color clr)
+        {
+            if (_findedInTextBox.Count == 0)
+            {
+                MessageBox.Show(@"Not found try again", @"Find", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
+            }
+
+            // if position is bigger then go to zero pos
+            if (_findedInTextBoxPos >= _findedInTextBox.Count) _findedInTextBoxPos = 0;
+
+            GoToTextBoxLine(_findedInTextBox[_findedInTextBoxPos]);
+
+            // bookmark line
+            BookmarkLine(_findedInTextBox[_findedInTextBoxPos], clr);
+
+            // increment position
+            _findedInTextBoxPos++;
+        }
+
+        /// <summary>
         /// Find text in nodes
         /// </summary>
-        public void Find(string value, Color clr)
+        public void FindInTree(string value, Color clr)
         {
             try
             {
                 if (_findedSiebelTreeNode == null)
-                    FindFirst(value, clr);
+                    FindFirstInTree(value, clr);
                 else
-                    FindNext(_findedSiebelTreeNode, _findedSiebelNodePos[_findedSiebelNodePos.Count - 1], value, clr);
+                    FindNextInTree(_findedSiebelTreeNode, _findedSiebelNodePos[_findedSiebelNodePos.Count - 1], value, clr);
             }
             catch (Exception ex)
             {
@@ -304,7 +370,7 @@ namespace SiebelLogNotepad
         /// <summary>
         /// Find first node
         /// </summary>
-        private void FindFirst(string value, Color clr)
+        private void FindFirstInTree(string value, Color clr)
         {
             TreeNodeCollection tnc = treeViewSiebelTree.Nodes;
 
@@ -314,7 +380,7 @@ namespace SiebelLogNotepad
 
                 _findedSiebelNodePos.Add(i);
 
-                if (FindAuxiliar(stn, 0, value, clr)) return;
+                if (FindAuxiliarInTree(stn, 0, value, clr)) return;
 
                 _findedSiebelNodePos.RemoveAt(_findedSiebelNodePos.Count - 1);
             }
@@ -323,11 +389,11 @@ namespace SiebelLogNotepad
         /// <summary>
         /// Find Next Position
         /// </summary>
-        private void FindNext(SiebelTreeNode tns, int iPos, string value, Color clr)
+        private void FindNextInTree(SiebelTreeNode tns, int iPos, string value, Color clr)
         {
             while (true)
             {
-                if (FindAuxiliar(tns, iPos, value, clr)) return;
+                if (FindAuxiliarInTree(tns, iPos, value, clr)) return;
 
                 // go to parent if nothing to do
                 if (tns.Parent != null)
@@ -347,7 +413,7 @@ namespace SiebelLogNotepad
                     _findedSiebelTreeNode = null;
 
                     // move to first position
-                    FindFirst(value, clr);
+                    FindFirstInTree(value, clr);
 
                     return;
                 }
@@ -357,7 +423,7 @@ namespace SiebelLogNotepad
         /// <summary>
         /// Sub method used used in MoveToFirstFind and FindFromPrevious
         /// </summary>
-        private bool FindAuxiliar(SiebelTreeNode tns, int iPos, string value, Color clr)
+        private bool FindAuxiliarInTree(SiebelTreeNode tns, int iPos, string value, Color clr)
         {
             for (int i = iPos; i < tns.Nodes.Count; i++)
             {
@@ -385,13 +451,28 @@ namespace SiebelLogNotepad
                 _findedSiebelNodePos.Add(i);
 
                 // if this branch is the one leave
-                if (FindAuxiliar(tn, 0, value, clr)) return true;
+                if (FindAuxiliarInTree(tn, 0, value, clr)) return true;
 
                 // if not the one remove the node position
                 _findedSiebelNodePos.RemoveAt(_findedSiebelNodePos.Count - 1);
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Initialize find variables
+        /// </summary>
+        public void InitializeFindVariables()
+        {
+            // find next in tree initialization
+            _findedSiebelTreeNode = null;
+            _findedSiebelNodePos = new List<int>();
+
+            // find next in textbox initialization
+            _findedInTextBox = new List<int>();
+            _findedInTextBoxPos = 0;
+            _findedInTextBoxValue = string.Empty;
         }
 
         /*********************************** Mark Tree Events ***********************************/
@@ -426,6 +507,17 @@ namespace SiebelLogNotepad
 
                 MarkTreeNode(tn, value, clr);
             }
+        }
+
+        /// <summary>
+        /// Mark text with color
+        /// </summary>
+        public void MarkTextBox(string value, Color clr)
+        {
+            List<int> linesToMark = _fastColorTb.FindLines(value, RegexOptions.IgnoreCase);
+
+            foreach (int line  in linesToMark)
+                BookmarkLine(line, clr);
         }
 
         /*********************************** Load Events Ctrls ***********************************/
@@ -727,9 +819,7 @@ namespace SiebelLogNotepad
         {
             if (_linePosition == -1) return;
 
-            _fastColorTb.Navigate(_linePosition);
-            _fastColorTb.Focus();
-            SendKeys.SendWait("{RIGHT}");
+            GoToTextBoxLine(_linePosition);
         }
     }
 }

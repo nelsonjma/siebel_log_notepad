@@ -116,6 +116,7 @@
             this.Controls.Add(this.textBoxFind);
             this.Name = "MarkAndFind";
             this.Text = "Mark & Find";
+            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 
