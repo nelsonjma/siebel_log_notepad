@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -28,7 +29,6 @@ namespace SiebelLogNotepad
         private TextStyle _darkorangeStyle;
         private TextStyle _darkvioletStyle;
         
-
         private string _boldStyleText;
         private string _italicStyleText;
         private string _blueStyleText;
@@ -46,6 +46,7 @@ namespace SiebelLogNotepad
         // current folder
         private readonly string _defaultPath;
 
+        // default title
         private readonly string _originalFormHeaderText;
 
         private BackgroundWorker _eventLoadBackgroundWorker;
@@ -64,6 +65,9 @@ namespace SiebelLogNotepad
 
         // go to line
         private int _linePosition;
+
+        // bookmark color
+        private Color _bookmarkColor;
 
         public FormNotepad()
         {
@@ -97,6 +101,9 @@ namespace SiebelLogNotepad
 
             // set the default line = to a line that does not exists
             _linePosition = -1;
+
+            // initialize bookmark color
+            _bookmarkColor = Color.DarkRed;
         }
 
         /// <summary>
@@ -140,6 +147,17 @@ namespace SiebelLogNotepad
             ToolTip ttChangeText = new ToolTip { AutoPopDelay = 1000, InitialDelay = 1000, ReshowDelay = 500, ShowAlways = true };
             ttChangeText.SetToolTip(buttonChangeTree, "Change Text In Tree");
 
+            // Go To Line
+            ToolTip ttGoToLine = new ToolTip { AutoPopDelay = 1000, InitialDelay = 1000, ReshowDelay = 500, ShowAlways = true };
+            ttGoToLine.SetToolTip(buttonGoToLine, "Go To Line");
+
+            // Bookmark line
+            ToolTip ttBookMarkLine = new ToolTip { AutoPopDelay = 1000, InitialDelay = 1000, ReshowDelay = 500, ShowAlways = true };
+            ttBookMarkLine.SetToolTip(buttonBookMark, "Bookmark Line");
+
+            // Bookmark color cfg
+            ToolTip ttBookMarkCfg = new ToolTip { AutoPopDelay = 1000, InitialDelay = 1000, ReshowDelay = 500, ShowAlways = true };
+            ttBookMarkCfg.SetToolTip(buttonBookMarkCfg, "Bookmark Line Color Config");
         }
 
         /*********************************** Go To Line / Add Color To Text ***********************************/
@@ -153,11 +171,34 @@ namespace SiebelLogNotepad
             SendKeys.SendWait("{RIGHT}");
         }
 
+        /// <summary>
+        /// Bookmark with default color
+        /// </summary>
         private void BookmarkLine(int line, Color clr)
         {
             _fastColorTb.BookmarkColor = clr;
 
             _fastColorTb.BookmarkLine(line);
+        }
+
+        /// <summary>
+        /// Bookmark with default color
+        /// </summary>
+        private void BookmarkLine(int line)
+        {
+            _fastColorTb.BookmarkColor = _bookmarkColor;
+
+            _fastColorTb.BookmarkLine(line);
+        }
+
+        /// <summary>
+        /// Remove bookmark color
+        /// </summary>
+        /// <param name="line"></param>
+        /// <param name="clr"></param>
+        private void UnBookmarkLine(int line)
+        {
+            _fastColorTb.Bookmarks.Remove(line);
         }
 
         /*********************************** Fast Colored TextBox ***********************************/
@@ -189,6 +230,7 @@ namespace SiebelLogNotepad
                     Size = new Size(100, 100),
                     TabIndex = 0,
                     Zoom = 100,
+                    LineNumberColor = Color.Black
                 };
 
                 _fastColorTb.VisibleRangeChangedDelayed += FastColorTextBox_VisibleRangeChangedDelayed;
@@ -666,7 +708,15 @@ namespace SiebelLogNotepad
         // Background Worker - reports progress
         private void EventLoadBackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            try { this.Text = _originalFormHeaderText + @" " + e.ProgressPercentage + @"%"; } catch {}            
+            try
+            {
+                string file = !string.IsNullOrEmpty(_openLogFile)
+                        ? " - " + _openLogFile.Substring(_openLogFile.LastIndexOf(@"\", StringComparison.Ordinal) + 1) + " - "
+                        : " ";
+
+                Text = _originalFormHeaderText + file + e.ProgressPercentage + @"%";
+            }
+            catch { }            
         }
 
         /// <summary>
@@ -815,11 +865,47 @@ namespace SiebelLogNotepad
             _linePosition = stn.EventData.Line;
         }
 
+        // select the node and move to line
         private void buttonGoToLine_Click(object sender, EventArgs e)
         {
             if (_linePosition == -1) return;
 
             GoToTextBoxLine(_linePosition);
+        }
+
+        // bookmark line (just adds color)
+        private void buttonBookMark_Click(object sender, EventArgs e)
+        {
+            int line = _fastColorTb.Selection.Start.iLine;
+
+            if (_fastColorTb.Bookmarks.Count > 0)
+            {
+                Bookmark isLine = null;
+
+                try { isLine = _fastColorTb.Bookmarks.First(x => x.LineIndex == line); } catch {}
+                
+                if (isLine == null)
+                    BookmarkLine(line);
+                else
+                    UnBookmarkLine(line);    
+            }
+            else
+                BookmarkLine(line);            
+        }
+
+        // change bookmark color
+        private void buttonBookMarkCfg_Click(object sender, EventArgs e)
+        {
+            ColorDialog cd = new ColorDialog();
+
+            DialogResult result = cd.ShowDialog();
+
+            // See if user pressed ok.
+            if (result == DialogResult.OK)
+            {
+                // change default color
+                _bookmarkColor = cd.Color;
+            }
         }
     }
 }

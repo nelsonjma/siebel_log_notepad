@@ -141,6 +141,18 @@ namespace EventTypeCfg
         // image
         private readonly string _img;
 
+        // type of operation selector
+        /*
+         * 0 is empty
+         * 1 = equal
+         * 2 = contains
+         * 3 = starts with
+         * 4 = ends with
+         * 
+         */
+        private readonly int _level0OpType;
+        private readonly int _level1OpType;
+
         private readonly string _level0;
         private readonly string _level1;
         private readonly string _level2Search;
@@ -154,13 +166,18 @@ namespace EventTypeCfg
             string level1, string level2Search, string level2ReplaceCriteria, string level2IgnoreCriteria, 
             string buildCriteria, string img)
         {
-            _level0 = level0;
-            _level1 = level1;
+            _level0 = level0.Contains("%") ? level0.Replace("%", " ").Trim() : level0;
+            _level1 = level1.Contains("%") ? level1.Replace("%", " ").Trim() : level1;
+            
             _level2Search = level2Search;
             _level2ReplaceCriteria = level2ReplaceCriteria;
             _level2IgnoreCriteria = level2IgnoreCriteria;
             _buildCriteria = buildCriteria;
             _img = img;
+
+            // type of operation selector
+            _level0OpType = OperationSelector(level0);
+            _level1OpType = OperationSelector(level1);
         }
 
         public override string OutMessage()
@@ -176,8 +193,8 @@ namespace EventTypeCfg
             _tmpLevel1 = level1;
             _tmpLevel2 = level2;
 
-            return LevelCompare(_tmpLevel0, _level0) &&
-                   LevelCompare(_tmpLevel1, _level1) &&
+            return LevelCompare(_tmpLevel0, _level0, _level0OpType) &&
+                   LevelCompare(_tmpLevel1, _level1, _level1OpType) &&
                    Level2Process.Search(_tmpLevel2, _level2Search) &&
                    (!Level2Process.Search(_tmpLevel2, _level2IgnoreCriteria) || _level2IgnoreCriteria == string.Empty); // this criterias are to be ignored so this needs to be false
         }
@@ -196,9 +213,72 @@ namespace EventTypeCfg
         /// <summary>
         /// Compare level, but if cfg level is empty if will return true, it means that user wants that event can be any type
         /// </summary>
-        private static bool LevelCompare(string tmpLevel, string level)
+        /// <param name="tmpLevel">value in log</param>
+        /// <param name="level">value in configuration</param>
+        private static bool LevelEqualCompare(string tmpLevel, string level)
         {
             return level == string.Empty || String.Equals(tmpLevel, level, StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        /// <summary>
+        /// Stategy equal to top but not equal its startswith
+        /// </summary>
+        private static bool LevelStartCompare(string tmpLevel, string level)
+        {
+            return level == string.Empty || tmpLevel.StartsWith(level, StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        /// <summary>
+        /// Stategy equal to top but not equal its endswith
+        /// </summary>
+        private static bool LevelEndCompare(string tmpLevel, string level)
+        {
+            return level == string.Empty || tmpLevel.EndsWith(level, StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        /// <summary>
+        /// Stategy equal to top but not equal its contains
+        /// </summary>
+        private static bool LevelContainsCompare(string tmpLevel, string level)
+        {
+            return level == string.Empty || tmpLevel.Contains(level);
+        }
+
+        /********* Level Operation *********/
+        private int OperationSelector(string level)
+        {
+            if (level == string.Empty)
+                return 0;
+
+            if (level[0].Equals('%') && level[level.Length - 1].Equals('%'))
+                return 2;
+
+            if (level[0].Equals('%'))
+                return 3;
+
+            if (level[level.Length - 1].Equals('%'))
+                return 4;
+
+            return 1;
+        }
+
+        private static bool LevelCompare(string tmpLevel, string level, int op)
+        {
+            switch (op)
+            {
+                case 0:
+                    return true;
+                case 1:
+                    return LevelEqualCompare(tmpLevel, level);
+                case 2:
+                    return LevelContainsCompare(tmpLevel, level);
+                case 3:
+                    return LevelStartCompare(tmpLevel, level);
+                case 4:
+                    return LevelEndCompare(tmpLevel, level);
+            }
+
+            return false;
         }
     }
 }

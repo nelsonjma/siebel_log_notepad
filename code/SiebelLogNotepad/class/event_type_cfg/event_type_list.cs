@@ -79,7 +79,7 @@ class EventTypeList
 
                         ListEvents.Add(evtType);
                     }
-                    catch (Exception ex)
+                    catch 
                     {                  
                         // implementar mecanismo de log
                     }

@@ -63,6 +63,26 @@ namespace SiebelLogNotepad {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap bookmark {
+            get {
+                object obj = ResourceManager.GetObject("bookmark", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap bookmark_cfg {
+            get {
+                object obj = ResourceManager.GetObject("bookmark_cfg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap change_tree {
             get {
                 object obj = ResourceManager.GetObject("change_tree", resourceCulture);
@@ -96,6 +116,16 @@ namespace SiebelLogNotepad {
         internal static System.Drawing.Bitmap find_in_tree {
             get {
                 object obj = ResourceManager.GetObject("find_in_tree", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap go_to {
+            get {
+                object obj = ResourceManager.GetObject("go_to", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -229,7 +229,7 @@
 			</sample>
 			<image>error.png</image>
 			<level_0></level_0>
-			<level_1>Error</level_1>
+			<level_1>%Error%</level_1>
 			<level_2>
 				<search></search>
 				<replace_criteria></replace_criteria>
