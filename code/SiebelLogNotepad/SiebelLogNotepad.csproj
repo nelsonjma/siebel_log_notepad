@@ -61,6 +61,12 @@
     <Compile Include="FormNotepad.Designer.cs">
       <DependentUpon>FormNotepad.cs</DependentUpon>
     </Compile>
+    <Compile Include="forms\ChangeTreeLabel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ChangeTreeLabel.Designer.cs">
+      <DependentUpon>ChangeTreeLabel.cs</DependentUpon>
+    </Compile>
     <Compile Include="forms\IgnoreEvents.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,6 +88,9 @@
     </Compile>
     <EmbeddedResource Include="FormNotepad.resx">
       <DependentUpon>FormNotepad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\ChangeTreeLabel.resx">
+      <DependentUpon>ChangeTreeLabel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\IgnoreEvents.resx">
       <DependentUpon>IgnoreEvents.cs</DependentUpon>

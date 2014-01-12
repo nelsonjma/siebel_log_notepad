@@ -144,10 +144,11 @@ namespace Events.TreeView
         /// <summary>
         /// Returns events so taht in can be load in to tree view, with ignore list
         /// </summary>
-        public Event GetTreeEvents(List<IgnoreEvent> listIgnoreEventMsgs)
+        public Event GetTreeEvents(List<IgnoreEvent> listIgnoreEventMsgs, TreeLabel treeLabel)
         {
             _curEvt = _evt;
             _curEvt.EventsToIgnore = listIgnoreEventMsgs;
+            _curEvt.TreeLabel = treeLabel;
 
             return _curEvt;
         }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Specialized;
 using Events.TreeView;
 
 namespace Events
@@ -26,8 +27,12 @@ namespace Events
         // events that will be ignored
         public List<IgnoreEvent> EventsToIgnore { get; set; }
 
+        // class that contains information of what to show
+        public TreeLabel TreeLabel { get; set; }
+
         public Event()
         {
+            TreeLabel = null;
             Events = new List<Event>();
             EventElements = new List<EventData>();
             EventElementsPosition = new List<int>();
@@ -41,18 +46,19 @@ namespace Events
         {
             SiebelTreeNode tn = Master == null
                 ? new SiebelTreeNode()
-                : new SiebelTreeNode(Master);
+                : new SiebelTreeNode(Master, TreeLabel);
 
             foreach (int pos in EventElementsPosition)
             {
                 if (pos >= 0)
                 {
                     if (!IsEventToIgnore(EventElements[pos]))
-                        tn.Nodes.Add(new SiebelTreeNode(EventElements[pos]));
+                        tn.Nodes.Add(new SiebelTreeNode(EventElements[pos], TreeLabel));
                 }
                 else
                 {
                     Events[(pos*-1) - 1].EventsToIgnore = EventsToIgnore;
+                    Events[(pos*-1) - 1].TreeLabel = TreeLabel;
 
                     if (!IsEventToIgnore(Events[(pos * -1) - 1].Master))
                         tn.Nodes.Add(Events[(pos * -1) - 1].GetTreeNodes());
@@ -106,5 +112,15 @@ namespace Events
         public string LogEvent { get; set; }
         public string LogSubEvent { get; set; }
         public string LogMessage { get; set; }
+    }
+
+    class TreeLabel
+    {
+        public bool Name { get; set; }
+        public bool LogLine { get; set; }
+        public bool LogEvent { get; set; }
+        public bool LogSubEvent { get; set; }
+        public bool LogDateTime { get; set; }
+        public bool LogMessage { get; set; }
     }
 }

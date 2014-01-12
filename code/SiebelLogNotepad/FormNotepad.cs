@@ -5,7 +5,6 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -36,7 +35,6 @@ namespace SiebelLogNotepad
         private string _darkredStyleText;
         private string _darkorangeStyleText;
         
-
         // siebel log file
         private string _openLogFile;
         
@@ -693,8 +691,8 @@ namespace SiebelLogNotepad
                 // get icons
                 treeViewSiebelTree.ImageList = stv.LoadEventIcons();
                 
-                // add the nodes to three
-                treeViewSiebelTree.Nodes.Add(stv.GetTreeEvents(LoadIgnoreEvents()).GetTreeNodes());
+                // add the nodes to three with ignore list and tree label information
+                treeViewSiebelTree.Nodes.Add(stv.GetTreeEvents(LoadIgnoreEvents(), LoadTreeLabel()).GetTreeNodes());
                 
                 // set treeview default icon
                 treeViewSiebelTree.SelectedImageKey = @"default.png";
@@ -751,6 +749,53 @@ namespace SiebelLogNotepad
             catch (Exception ex)
             {
                 throw new Exception("Load Ignore Events Xml Error: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Load Tree Label from file
+        /// </summary>
+        private TreeLabel LoadTreeLabel()
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                ds.ReadXml(_defaultPath + @"\cfg\tree_labels.xml", XmlReadMode.ReadSchema);
+
+                TreeLabel tl = new TreeLabel();
+
+                if (ds.Tables.Count <= 0) return tl;
+
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                {
+                   switch (dr["name"].ToString())
+                    {
+                        case "processed_text":
+                            tl.Name = Convert.ToBoolean(dr["status"]);
+                            break;
+                        case "log_line":
+                            tl.LogLine = Convert.ToBoolean(dr["status"]);
+                            break;
+                        case "log_event":
+                            tl.LogEvent = Convert.ToBoolean(dr["status"]);
+                            break;
+                        case "log_subevent":
+                            tl.LogSubEvent = Convert.ToBoolean(dr["status"]);
+                            break;
+                        case "log_datetime":
+                            tl.LogDateTime = Convert.ToBoolean(dr["status"]);
+                            break;
+                        case "log_message":
+                            tl.LogMessage = Convert.ToBoolean(dr["status"]);
+                            break;
+                    }
+                }
+
+                return tl;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Load Tree Label Xml Error: " + ex.Message);
             }
         }
 
@@ -906,6 +951,13 @@ namespace SiebelLogNotepad
                 // change default color
                 _bookmarkColor = cd.Color;
             }
+        }
+
+        // change tree label
+        private void buttonChangeTree_Click(object sender, EventArgs e)
+        {
+            ChangeTreeLabel ctl = new ChangeTreeLabel();
+            ctl.Show();
         }
     }
 }

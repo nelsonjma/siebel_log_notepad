@@ -31,12 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormNotepad));
             this.splitContainerMain = new System.Windows.Forms.SplitContainer();
             this.panelButtons = new System.Windows.Forms.Panel();
-            this.splitContainerTreeTextBox = new System.Windows.Forms.SplitContainer();
-            this.panelTreeView = new System.Windows.Forms.Panel();
-            this.treeViewSiebelTree = new System.Windows.Forms.TreeView();
-            this.panelTextBox = new System.Windows.Forms.Panel();
-            this.splitContainerTreeTextBoxOption = new System.Windows.Forms.SplitContainer();
-            this.panelTreeTextOption = new System.Windows.Forms.Panel();
             this.buttonBookMarkCfg = new System.Windows.Forms.Button();
             this.buttonChangeTree = new System.Windows.Forms.Button();
             this.buttonCollapse = new System.Windows.Forms.Button();
@@ -46,9 +40,15 @@
             this.buttonIgnore = new System.Windows.Forms.Button();
             this.buttonOpenConfig = new System.Windows.Forms.Button();
             this.buttonOpenLog = new System.Windows.Forms.Button();
+            this.splitContainerTreeTextBox = new System.Windows.Forms.SplitContainer();
+            this.panelTreeView = new System.Windows.Forms.Panel();
+            this.treeViewSiebelTree = new System.Windows.Forms.TreeView();
+            this.splitContainerTreeTextBoxOption = new System.Windows.Forms.SplitContainer();
+            this.panelTreeTextOption = new System.Windows.Forms.Panel();
             this.buttonBookMark = new System.Windows.Forms.Button();
             this.buttonGoToLine = new System.Windows.Forms.Button();
             this.buttonMarkAndFind = new System.Windows.Forms.Button();
+            this.panelTextBox = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
             this.splitContainerMain.Panel1.SuspendLayout();
             this.splitContainerMain.Panel2.SuspendLayout();
@@ -104,84 +104,6 @@
             this.panelButtons.Size = new System.Drawing.Size(982, 29);
             this.panelButtons.TabIndex = 0;
             // 
-            // splitContainerTreeTextBox
-            // 
-            this.splitContainerTreeTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.splitContainerTreeTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerTreeTextBox.Location = new System.Drawing.Point(0, 0);
-            this.splitContainerTreeTextBox.Name = "splitContainerTreeTextBox";
-            // 
-            // splitContainerTreeTextBox.Panel1
-            // 
-            this.splitContainerTreeTextBox.Panel1.Controls.Add(this.panelTreeView);
-            // 
-            // splitContainerTreeTextBox.Panel2
-            // 
-            this.splitContainerTreeTextBox.Panel2.Controls.Add(this.splitContainerTreeTextBoxOption);
-            this.splitContainerTreeTextBox.Size = new System.Drawing.Size(982, 528);
-            this.splitContainerTreeTextBox.SplitterDistance = 371;
-            this.splitContainerTreeTextBox.TabIndex = 0;
-            // 
-            // panelTreeView
-            // 
-            this.panelTreeView.Controls.Add(this.treeViewSiebelTree);
-            this.panelTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelTreeView.Location = new System.Drawing.Point(0, 0);
-            this.panelTreeView.Name = "panelTreeView";
-            this.panelTreeView.Size = new System.Drawing.Size(369, 526);
-            this.panelTreeView.TabIndex = 0;
-            // 
-            // treeViewSiebelTree
-            // 
-            this.treeViewSiebelTree.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.treeViewSiebelTree.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeViewSiebelTree.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.treeViewSiebelTree.Location = new System.Drawing.Point(0, 0);
-            this.treeViewSiebelTree.Name = "treeViewSiebelTree";
-            this.treeViewSiebelTree.Size = new System.Drawing.Size(369, 526);
-            this.treeViewSiebelTree.TabIndex = 0;
-            this.treeViewSiebelTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewSiebelTree_NodeMouseClick);
-            // 
-            // panelTextBox
-            // 
-            this.panelTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelTextBox.Location = new System.Drawing.Point(0, 0);
-            this.panelTextBox.Name = "panelTextBox";
-            this.panelTextBox.Size = new System.Drawing.Size(581, 526);
-            this.panelTextBox.TabIndex = 0;
-            // 
-            // splitContainerTreeTextBoxOption
-            // 
-            this.splitContainerTreeTextBoxOption.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.splitContainerTreeTextBoxOption.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerTreeTextBoxOption.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainerTreeTextBoxOption.IsSplitterFixed = true;
-            this.splitContainerTreeTextBoxOption.Location = new System.Drawing.Point(0, 0);
-            this.splitContainerTreeTextBoxOption.Name = "splitContainerTreeTextBoxOption";
-            // 
-            // splitContainerTreeTextBoxOption.Panel1
-            // 
-            this.splitContainerTreeTextBoxOption.Panel1.Controls.Add(this.panelTreeTextOption);
-            this.splitContainerTreeTextBoxOption.Panel1MinSize = 20;
-            // 
-            // splitContainerTreeTextBoxOption.Panel2
-            // 
-            this.splitContainerTreeTextBoxOption.Panel2.Controls.Add(this.panelTextBox);
-            this.splitContainerTreeTextBoxOption.Size = new System.Drawing.Size(607, 528);
-            this.splitContainerTreeTextBoxOption.SplitterDistance = 20;
-            this.splitContainerTreeTextBoxOption.TabIndex = 1;
-            // 
-            // panelTreeTextOption
-            // 
-            this.panelTreeTextOption.Controls.Add(this.buttonBookMark);
-            this.panelTreeTextOption.Controls.Add(this.buttonGoToLine);
-            this.panelTreeTextOption.Controls.Add(this.buttonMarkAndFind);
-            this.panelTreeTextOption.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelTreeTextOption.Location = new System.Drawing.Point(0, 0);
-            this.panelTreeTextOption.Name = "panelTreeTextOption";
-            this.panelTreeTextOption.Size = new System.Drawing.Size(18, 526);
-            this.panelTreeTextOption.TabIndex = 0;
-            // 
             // buttonBookMarkCfg
             // 
             this.buttonBookMarkCfg.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
@@ -202,6 +124,7 @@
             this.buttonChangeTree.Size = new System.Drawing.Size(24, 24);
             this.buttonChangeTree.TabIndex = 8;
             this.buttonChangeTree.UseVisualStyleBackColor = true;
+            this.buttonChangeTree.Click += new System.EventHandler(this.buttonChangeTree_Click);
             // 
             // buttonCollapse
             // 
@@ -280,6 +203,76 @@
             this.buttonOpenLog.UseVisualStyleBackColor = true;
             this.buttonOpenLog.Click += new System.EventHandler(this.buttonOpenLog_Click);
             // 
+            // splitContainerTreeTextBox
+            // 
+            this.splitContainerTreeTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.splitContainerTreeTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerTreeTextBox.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerTreeTextBox.Name = "splitContainerTreeTextBox";
+            // 
+            // splitContainerTreeTextBox.Panel1
+            // 
+            this.splitContainerTreeTextBox.Panel1.Controls.Add(this.panelTreeView);
+            // 
+            // splitContainerTreeTextBox.Panel2
+            // 
+            this.splitContainerTreeTextBox.Panel2.Controls.Add(this.splitContainerTreeTextBoxOption);
+            this.splitContainerTreeTextBox.Size = new System.Drawing.Size(982, 528);
+            this.splitContainerTreeTextBox.SplitterDistance = 371;
+            this.splitContainerTreeTextBox.TabIndex = 0;
+            // 
+            // panelTreeView
+            // 
+            this.panelTreeView.Controls.Add(this.treeViewSiebelTree);
+            this.panelTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelTreeView.Location = new System.Drawing.Point(0, 0);
+            this.panelTreeView.Name = "panelTreeView";
+            this.panelTreeView.Size = new System.Drawing.Size(369, 526);
+            this.panelTreeView.TabIndex = 0;
+            // 
+            // treeViewSiebelTree
+            // 
+            this.treeViewSiebelTree.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.treeViewSiebelTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewSiebelTree.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.treeViewSiebelTree.Location = new System.Drawing.Point(0, 0);
+            this.treeViewSiebelTree.Name = "treeViewSiebelTree";
+            this.treeViewSiebelTree.Size = new System.Drawing.Size(369, 526);
+            this.treeViewSiebelTree.TabIndex = 0;
+            this.treeViewSiebelTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewSiebelTree_NodeMouseClick);
+            // 
+            // splitContainerTreeTextBoxOption
+            // 
+            this.splitContainerTreeTextBoxOption.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.splitContainerTreeTextBoxOption.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerTreeTextBoxOption.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainerTreeTextBoxOption.IsSplitterFixed = true;
+            this.splitContainerTreeTextBoxOption.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerTreeTextBoxOption.Name = "splitContainerTreeTextBoxOption";
+            // 
+            // splitContainerTreeTextBoxOption.Panel1
+            // 
+            this.splitContainerTreeTextBoxOption.Panel1.Controls.Add(this.panelTreeTextOption);
+            this.splitContainerTreeTextBoxOption.Panel1MinSize = 20;
+            // 
+            // splitContainerTreeTextBoxOption.Panel2
+            // 
+            this.splitContainerTreeTextBoxOption.Panel2.Controls.Add(this.panelTextBox);
+            this.splitContainerTreeTextBoxOption.Size = new System.Drawing.Size(607, 528);
+            this.splitContainerTreeTextBoxOption.SplitterDistance = 25;
+            this.splitContainerTreeTextBoxOption.TabIndex = 1;
+            // 
+            // panelTreeTextOption
+            // 
+            this.panelTreeTextOption.Controls.Add(this.buttonBookMark);
+            this.panelTreeTextOption.Controls.Add(this.buttonGoToLine);
+            this.panelTreeTextOption.Controls.Add(this.buttonMarkAndFind);
+            this.panelTreeTextOption.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelTreeTextOption.Location = new System.Drawing.Point(0, 0);
+            this.panelTreeTextOption.Name = "panelTreeTextOption";
+            this.panelTreeTextOption.Size = new System.Drawing.Size(23, 526);
+            this.panelTreeTextOption.TabIndex = 0;
+            // 
             // buttonBookMark
             // 
             this.buttonBookMark.FlatAppearance.BorderSize = 0;
@@ -317,6 +310,14 @@
             this.buttonMarkAndFind.TabIndex = 5;
             this.buttonMarkAndFind.UseVisualStyleBackColor = true;
             this.buttonMarkAndFind.Click += new System.EventHandler(this.buttonMarkAndFind_Click);
+            // 
+            // panelTextBox
+            // 
+            this.panelTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelTextBox.Location = new System.Drawing.Point(0, 0);
+            this.panelTextBox.Name = "panelTextBox";
+            this.panelTextBox.Size = new System.Drawing.Size(576, 526);
+            this.panelTextBox.TabIndex = 0;
             // 
             // FormNotepad
             // 
