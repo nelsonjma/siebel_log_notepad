@@ -157,9 +157,13 @@ namespace SiebelLogNotepad
             ToolTip ttBookMarkCfg = new ToolTip { AutoPopDelay = 1000, InitialDelay = 1000, ReshowDelay = 500, ShowAlways = true };
             ttBookMarkCfg.SetToolTip(buttonBookMarkCfg, "Bookmark Line Color Config");
 
-            // Bookmark color cfg
+            // Copy text
             ToolTip ttCopy = new ToolTip { AutoPopDelay = 1000, InitialDelay = 1000, ReshowDelay = 500, ShowAlways = true };
             ttCopy.SetToolTip(buttonCopy, "Copy node text");
+
+            // Bookmark color cfg
+            ToolTip ttAbout = new ToolTip { AutoPopDelay = 1000, InitialDelay = 1000, ReshowDelay = 500, ShowAlways = true };
+            ttAbout.SetToolTip(buttonAbout, "About Form");
         }
 
         /*********************************** Go To Line / Add Color To Text ***********************************/
@@ -168,9 +172,19 @@ namespace SiebelLogNotepad
         /// </summary>
         private void GoToTextBoxLine(int line)
         {
-            _fastColorTb.Navigate(line);
-            _fastColorTb.Focus();
-            SendKeys.SendWait("{RIGHT}");
+            try
+            {
+                _fastColorTb.Navigate(line);
+
+                _fastColorTb.SelectionLength = _fastColorTb.Lines[line].Length;
+
+                _fastColorTb.Focus();
+                //SendKeys.SendWait("{RIGHT}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, @"Go To Line", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>
@@ -349,7 +363,6 @@ namespace SiebelLogNotepad
         }
 
         /*********************************** Find Next Tree Events ***********************************/
-
         /****** Find in text ******/
         /// <summary>
         /// First find text in textbox it will generate the line list
@@ -368,8 +381,11 @@ namespace SiebelLogNotepad
             // get lines
             _findedInTextBox = _fastColorTb.FindLines(value, RegexOptions.IgnoreCase);
 
+
+            int posForCurrentLine = _findedInTextBox.FindIndex(x => x == _fastColorTb.Selection.Start.iLine);
+
             // initialize current position
-            _findedInTextBoxPos = 0;
+            _findedInTextBoxPos = posForCurrentLine >= 0 ? posForCurrentLine : 0;
 
             // find line and move to the first -1 is to ignore increment or decrement
             FindInTextBox(clr, -1);
@@ -983,10 +999,16 @@ namespace SiebelLogNotepad
             Clipboard.SetText(_selectedNode.Text);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        // about box open
+        private void buttonAbout_Click(object sender, EventArgs e)
         {
             AboutBox ab = new AboutBox();
             ab.Show();
+        }
+
+        private void FormNotepad_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

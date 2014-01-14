@@ -136,7 +136,8 @@
             this.textBoxDescription.Size = new System.Drawing.Size(271, 126);
             this.textBoxDescription.TabIndex = 23;
             this.textBoxDescription.TabStop = false;
-            this.textBoxDescription.Text = "Description: for more details go to : https://github.com/nelsonjma/siebel_log_notepad";
+            this.textBoxDescription.Text = "Description: for more details go to : https://github.com/nelsonjma/siebel_log_not" +
+    "epad";
             // 
             // okButton
             // 

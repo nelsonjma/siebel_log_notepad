@@ -19,7 +19,7 @@
     </xs:element>
   </xs:schema>
   <Table1>
-    <active>false</active>
+    <active>true</active>
     <sub_event>Error</sub_event>
   </Table1>
   <Table1>

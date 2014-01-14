@@ -44,7 +44,7 @@
 					<search>starts_with('Begin: Business Service');</search>
 					<replace_criteria>
 						replace('Begin: Business Service '','BS: ');
-						replace('' invoke method: '',' ==> Method ');
+						replace('' invoke method: '',' Method ');
 						from_end_remove_from_to(''');
 					</replace_criteria>
 				</level_2>
@@ -121,7 +121,7 @@
 				PrcExec	Create		A criar a instÃ¢ncia da definiÃ§Ã£o do processo 'TVC IOOA EIL WF'.
 				PrcExec	End			A parar a instÃ¢ncia do processo 'TVC IOIA Log File WF' com um estado 'ConcluÃ­do'.
 			</sample>
-			<image>wf.png</image>
+			<image>cursor.png</image>
 			<level_0>PrcExec</level_0>
 			<in>
 				<level_1>Create</level_1>
@@ -138,7 +138,7 @@
 				<level_2>
 					<search>starts_with('A parar a');</search>
 					<replace_criteria>
-						from_start_remove_from_to('com um estado '');
+						from_start_remove_from_to(''');
 						from_end_remove_from_to(''');
 					</replace_criteria>
 				</level_2>
@@ -147,10 +147,39 @@
 		</in_out_event>
 		<in_out_event>
 			<sample>
+				PrcExec	Create		A criar a instÃ¢ncia da definiÃ§Ã£o do processo 'TVC IOOA EIL WF'.
+				PrcExec	End			A parar a instÃ¢ncia do processo 'TVC IOIA Log File WF' com um estado 'ConcluÃ­do'.
+			</sample>
+			<image>cursor.png</image>
+			<level_0>PrcExec</level_0>
+			<in>
+				<level_1>Create</level_1>
+				<level_2>
+					<search>starts_with('A criar a');</search>
+					<replace_criteria>
+						from_start_remove_from_to(''');
+						from_end_remove_from_to(''');
+					</replace_criteria>
+				</level_2>
+			</in>
+			<out>
+				<level_1>End</level_1>
+				<level_2>
+					<search>starts_with('A parar a');</search>
+					<replace_criteria>
+						from_start_remove_from_to(''');
+						from_end_remove_from_to(''');
+					</replace_criteria>
+				</level_2>
+			</out>
+			<build>{IN} ({OUT})</build>
+		</in_out_event>		
+		<in_out_event>
+			<sample>
 				StpExec	Create		A criar a instÃ¢ncia da definiÃ§Ã£o do passo 'DB Has record?'.
 				StpExec	End			A parar a instÃ¢ncia do passo 'DB Conn Pooling Wait Step' com um estado 'ConcluÃ­do'.
 			</sample>
-			<image>wfstep.png</image>
+			<image>cursor.png</image>
 			<level_0>StpExec</level_0>
 			<in>
 				<level_1>Create</level_1>
@@ -167,7 +196,7 @@
 				<level_2>
 					<search>starts_with('A parar a');</search>
 					<replace_criteria>
-						from_start_remove_from_to('com um estado '');
+						from_start_remove_from_to(''');
 						from_end_remove_from_to(''');
 					</replace_criteria>
 				</level_2>
@@ -264,26 +293,6 @@
 				<ignore_criteria></ignore_criteria>
 			</level_2>
 			<build>{MSG}</build>
-		</neutral_event>
-		<neutral_event>
-			<sample>
-				ObjMgrSqlLog	Detail	4	2014-01-10 16:17:00	Cursor de SQL com linhas de obtenção de ID 347C1048: 0, obter sempre: 0.000 segundos.
-			</sample>
-			<image>select.png</image>
-			<level_0>ObjMgrSqlLog</level_0>
-			<level_1>Detail</level_1>
-			<level_2>
-				<search>
-					starts_with('Cursor de SQL com linhas de obtenção de ID');
-				</search>
-				<replace_criteria>
-					from_start_remove_from_to(': ');
-					replace(', obter sempre:', ' - ');
-					from_end_remove_from_to('.');
-				</replace_criteria>
-				<ignore_criteria></ignore_criteria>
-			</level_2>
-			<build>Rows : {MSG}</build>
 		</neutral_event>
 	</neutral_events>	
 </events>

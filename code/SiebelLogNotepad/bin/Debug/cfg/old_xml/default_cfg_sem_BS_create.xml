@@ -63,38 +63,6 @@
 		</in_out_event>
 		<in_out_event>
 			<sample>
-				ObjMgrBusServiceLog	Create	4	2011-10-20 12:31:10	Business Service 'Web Engine UI Preferences' was created 3a3b1158
-				ObjMgrBusServiceLog	Delete	4	2011-10-20 12:31:10	Business Service was deleted 3a3b1158
-			</sample>
-			<image>bs.png</image>
-			<level_0>ObjMgrBusServiceLog</level_0>
-			<in>
-				<level_1>Create</level_1>
-				<level_2>
-					<search>
-						starts_with('Business Service');
-						contains('was created');
-					</search>
-					<replace_criteria>
-						from_start_remove_from_to(''');
-						from_end_remove_from_to(''');
-					</replace_criteria>
-				</level_2>
-			</in>
-			<out>
-				<level_1>Delete</level_1>
-				<level_2>
-					<search>
-						starts_with('Business Service');
-						contains('was deleted');
-					</search>
-					<replace_criteria></replace_criteria>
-				</level_2>
-			</out>
-			<build>BS: {IN}</build>
-		</in_out_event>
-		<in_out_event>
-			<sample>
 				Begin: ExecuteStmt for Cursor 22ffca80
 				End: ExecuteStmt for Cursor 22ffca80
 			</sample>

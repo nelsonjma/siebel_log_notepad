@@ -16,7 +16,11 @@ namespace EventTypeCfg
         {
             try
             {
-                if (data == null || data.Trim() == string.Empty || criteria == string.Empty) return true;
+                // if data empty and criteria empty then this is OK.
+                if ((data == null || data.Trim() == string.Empty) && criteria == string.Empty) return true;
+
+                // if data is empty and criteria is not well this is not OK.
+                if ((data == null || data.Trim() == string.Empty) && criteria != string.Empty) return false;
 
                 // remove \t, \n and \r\t chars
                 criteria = RemoveUnwantedChars(criteria);
