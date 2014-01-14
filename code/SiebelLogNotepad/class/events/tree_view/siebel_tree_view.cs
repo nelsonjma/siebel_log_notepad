@@ -285,7 +285,7 @@ namespace Events.TreeView
             }
             catch (Exception ex)
             {
-                throw new Exception("Load Events From File error:" + ex.Message);
+                MessageBox.Show(ex.Message, @"Load Events From File", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

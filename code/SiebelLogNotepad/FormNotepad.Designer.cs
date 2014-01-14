@@ -45,6 +45,7 @@
             this.treeViewSiebelTree = new System.Windows.Forms.TreeView();
             this.splitContainerTreeTextBoxOption = new System.Windows.Forms.SplitContainer();
             this.panelTreeTextOption = new System.Windows.Forms.Panel();
+            this.buttonCopy = new System.Windows.Forms.Button();
             this.buttonBookMark = new System.Windows.Forms.Button();
             this.buttonGoToLine = new System.Windows.Forms.Button();
             this.buttonMarkAndFind = new System.Windows.Forms.Button();
@@ -264,6 +265,7 @@
             // 
             // panelTreeTextOption
             // 
+            this.panelTreeTextOption.Controls.Add(this.buttonCopy);
             this.panelTreeTextOption.Controls.Add(this.buttonBookMark);
             this.panelTreeTextOption.Controls.Add(this.buttonGoToLine);
             this.panelTreeTextOption.Controls.Add(this.buttonMarkAndFind);
@@ -272,6 +274,20 @@
             this.panelTreeTextOption.Name = "panelTreeTextOption";
             this.panelTreeTextOption.Size = new System.Drawing.Size(23, 526);
             this.panelTreeTextOption.TabIndex = 0;
+            // 
+            // buttonCopy
+            // 
+            this.buttonCopy.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.buttonCopy.FlatAppearance.BorderSize = 0;
+            this.buttonCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonCopy.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonCopy.Image = global::SiebelLogNotepad.Resources.copy;
+            this.buttonCopy.Location = new System.Drawing.Point(3, 74);
+            this.buttonCopy.Name = "buttonCopy";
+            this.buttonCopy.Size = new System.Drawing.Size(18, 18);
+            this.buttonCopy.TabIndex = 12;
+            this.buttonCopy.UseVisualStyleBackColor = true;
+            this.buttonCopy.Click += new System.EventHandler(this.buttonCopy_Click);
             // 
             // buttonBookMark
             // 
@@ -370,6 +386,7 @@
         private System.Windows.Forms.Panel panelTreeTextOption;
         private System.Windows.Forms.Button buttonBookMark;
         private System.Windows.Forms.Button buttonBookMarkCfg;
+        private System.Windows.Forms.Button buttonCopy;
     }
 }
 

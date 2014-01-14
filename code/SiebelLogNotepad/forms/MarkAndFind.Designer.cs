@@ -34,6 +34,7 @@
             this.buttonFindNext = new System.Windows.Forms.Button();
             this.buttonMarkAll = new System.Windows.Forms.Button();
             this.textBoxFind = new System.Windows.Forms.TextBox();
+            this.buttonFindPrevious = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonChangeColor
@@ -103,11 +104,23 @@
             this.textBoxFind.Size = new System.Drawing.Size(356, 20);
             this.textBoxFind.TabIndex = 6;
             // 
+            // buttonFindPrevious
+            // 
+            this.buttonFindPrevious.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.buttonFindPrevious.Location = new System.Drawing.Point(130, 62);
+            this.buttonFindPrevious.Name = "buttonFindPrevious";
+            this.buttonFindPrevious.Size = new System.Drawing.Size(112, 23);
+            this.buttonFindPrevious.TabIndex = 12;
+            this.buttonFindPrevious.Text = "Find Previous";
+            this.buttonFindPrevious.UseVisualStyleBackColor = true;
+            this.buttonFindPrevious.Click += new System.EventHandler(this.buttonFindPrevious_Click);
+            // 
             // MarkAndFind
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(387, 117);
+            this.Controls.Add(this.buttonFindPrevious);
             this.Controls.Add(this.buttonChangeColor);
             this.Controls.Add(this.radioButtonText);
             this.Controls.Add(this.radioButtonTree);
@@ -130,5 +143,6 @@
         private System.Windows.Forms.Button buttonFindNext;
         private System.Windows.Forms.Button buttonMarkAll;
         private System.Windows.Forms.TextBox textBoxFind;
+        private System.Windows.Forms.Button buttonFindPrevious;
     }
 }

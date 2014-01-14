@@ -61,8 +61,8 @@ namespace SiebelLogNotepad
         // textbox
         private FastColoredTextBox _fastColorTb;
 
-        // go to line
-        private int _linePosition;
+        // tree selected event
+        private SiebelTreeNode _selectedNode;
 
         // bookmark color
         private Color _bookmarkColor;
@@ -98,7 +98,7 @@ namespace SiebelLogNotepad
             InitializeFindVariables();
 
             // set the default line = to a line that does not exists
-            _linePosition = -1;
+            _selectedNode = null;
 
             // initialize bookmark color
             _bookmarkColor = Color.DarkRed;
@@ -345,15 +345,17 @@ namespace SiebelLogNotepad
         }
 
         /*********************************** Find Next Tree Events ***********************************/
+
+        /****** Find in text ******/
         /// <summary>
-        /// Find text in textbox
+        /// First find text in textbox it will generate the line list
         /// </summary>
-        public void FindInTextBox(string value, Color clr)
+        public void FindInTextBox(string value, Color clr, int direction)
         {
             // if text is equal then find next
             if (_findedInTextBoxValue == value)
             {
-                FindInTextBox(clr); return;
+                FindInTextBox(clr, direction); return;
             }
 
             // if != then store value
@@ -365,29 +367,38 @@ namespace SiebelLogNotepad
             // initialize current position
             _findedInTextBoxPos = 0;
 
-            // find line and then move to next
-            FindInTextBox(clr);
+            // find line and move to the first -1 is to ignore increment or decrement
+            FindInTextBox(clr, -1);
         }
 
-        public void FindInTextBox(Color clr)
+        /// <summary>
+        /// Move forward or backward
+        /// </summary>
+        public void FindInTextBox(Color clr, int direction)
         {
             if (_findedInTextBox.Count == 0)
+                { MessageBox.Show(@"Not found try again", @"Find", MessageBoxButtons.OK, MessageBoxIcon.Information); return; }
+
+            // decrement / increment position
+            switch (direction)
             {
-                MessageBox.Show(@"Not found try again", @"Find", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
+                case 0: _findedInTextBoxPos++; break;
+                case 1: _findedInTextBoxPos--; break;
             }
 
-            // if position is bigger then go to zero pos
-            if (_findedInTextBoxPos >= _findedInTextBox.Count) _findedInTextBoxPos = 0;
+            // if position is bigger then stay on top else if less then zero then stay on zero
+            if (_findedInTextBoxPos >= _findedInTextBox.Count) 
+                _findedInTextBoxPos = _findedInTextBox.Count - 1;
+            else if (_findedInTextBoxPos < 0) 
+                _findedInTextBoxPos = 0;
 
             GoToTextBoxLine(_findedInTextBox[_findedInTextBoxPos]);
 
             // bookmark line
             BookmarkLine(_findedInTextBox[_findedInTextBoxPos], clr);
-
-            // increment position
-            _findedInTextBoxPos++;
         }
 
+        /****** Find in tree ******/
         /// <summary>
         /// Find text in nodes
         /// </summary>
@@ -907,15 +918,15 @@ namespace SiebelLogNotepad
 
             if (stn == null || stn.EventData == null || stn.EventData.Line <= 0) return;
 
-            _linePosition = stn.EventData.Line;
+            _selectedNode = stn;
         }
 
         // select the node and move to line
         private void buttonGoToLine_Click(object sender, EventArgs e)
         {
-            if (_linePosition == -1) return;
+            if (_selectedNode == null || (_selectedNode != null && _selectedNode.EventData == null)) return;
 
-            GoToTextBoxLine(_linePosition);
+            GoToTextBoxLine(_selectedNode.EventData.Line);
         }
 
         // bookmark line (just adds color)
@@ -958,6 +969,14 @@ namespace SiebelLogNotepad
         {
             ChangeTreeLabel ctl = new ChangeTreeLabel();
             ctl.Show();
+        }
+
+        // copy tree node
+        private void buttonCopy_Click(object sender, EventArgs e)
+        {
+            if (_selectedNode == null) return;
+
+            Clipboard.SetText(_selectedNode.Text);
         }
     }
 }

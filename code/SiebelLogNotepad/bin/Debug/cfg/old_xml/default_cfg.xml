@@ -86,6 +86,32 @@
 		</in_out_event>
 		<in_out_event>
 			<sample>
+				ObjMgrBusCompLog	Create	4	2011-10-20 10:48:46	Begin: construct BusComp 43410008 "CommSrv CM Agent General Profile"
+				ObjMgrBusCompLog	Delete	4	2011-10-20 10:48:47	BusComp was deleted 52543008 "CommSrv CM Configurations"
+			</sample>
+			<image>bc.png</image>
+			<level_0>ObjMgrBusCompLog</level_0>
+			<in>
+				<level_1>Create</level_1>
+				<level_2>
+					<search>starts_with('Begin: construct BusComp');</search>
+					<replace_criteria>
+						from_start_remove_from_to('"');
+						from_end_remove_from_to('"');
+					</replace_criteria>
+				</level_2>
+			</in>
+			<out>
+				<level_1>Delete</level_1>
+				<level_2>
+					<search>starts_with('BusComp was deleted ');</search>
+					<replace_criteria></replace_criteria>
+				</level_2>
+			</out>
+			<build>{IN}</build>
+		</in_out_event>
+		<in_out_event>
+			<sample>
 				Begin: ExecuteStmt for Cursor 22ffca80
 				End: ExecuteStmt for Cursor 22ffca80
 			</sample>
@@ -134,7 +160,7 @@
 					</replace_criteria>
 				</level_2>
 			</out>
-			<build>{IN} ({OUT})</build>
+			<build>{IN} PARA REMOVER {OUT}</build>
 		</in_out_event>
 		<in_out_event>
 			<sample>
@@ -210,40 +236,6 @@
 				<ignore_criteria>contains('Este objecto está');</ignore_criteria>
 			</level_2>
 			<build>{MSG}</build>
-		</neutral_event>
-		<neutral_event>
-			<sample>
-				ObjMgrBusCompLog	Create	4	2011-10-20 10:48:46	Begin: construct BusComp 43410008 "CommSrv CM Agent General Profile"
-			</sample>
-			<image>bc_create.png</image>
-			<level_0>ObjMgrBusCompLog</level_0>
-			<level_1>Create</level_1>
-			<level_2>
-				<search>starts_with('Begin: construct BusComp');</search>
-				<replace_criteria>
-					from_start_remove_from_to('BusComp ');
-					from_end_remove_from_to('"');
-				</replace_criteria>
-				<ignore_criteria></ignore_criteria>
-			</level_2>
-			<build>Create BC: {MSG}</build>
-		</neutral_event>
-		<neutral_event>
-			<sample>
-				ObjMgrBusCompLog	Delete	4	2011-10-20 10:48:47	BusComp was deleted 52543008 "CommSrv CM Configurations"
-			</sample>
-			<image>bc_delete.png</image>
-			<level_0>ObjMgrBusCompLog</level_0>
-			<level_1>Delete</level_1>
-			<level_2>
-				<search>starts_with('BusComp was deleted ');</search>
-				<replace_criteria>
-					from_start_remove_from_to('deleted ');
-					from_end_remove_from_to('"');
-				</replace_criteria>
-				<ignore_criteria></ignore_criteria>
-			</level_2>
-			<build>Delete BC: {MSG}</build>
 		</neutral_event>
 	</neutral_events>
 </events>

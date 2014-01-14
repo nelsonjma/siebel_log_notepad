@@ -34,4 +34,8 @@
     <active>true</active>
     <log_message>IsHighInteractive</log_message>
   </Table1>
+  <Table1>
+    <active>false</active>
+    <event>ObjMgrBusCompLog</event>
+  </Table1>
 </NewDataSet>

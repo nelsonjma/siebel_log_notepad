@@ -102,11 +102,30 @@ namespace SiebelLogNotepad.forms
                 if (radioButtonTree.Checked)
                     _fn.FindInTree(textBoxFind.Text, _defaultColor);
                 else
-                    _fn.FindInTextBox(textBoxFind.Text, _defaultColor);
+                    _fn.FindInTextBox(textBoxFind.Text, _defaultColor, 0);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, @"Find Next", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void buttonFindPrevious_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CheckIfNewText();
+
+                if (textBoxFind.Text == string.Empty) return;
+                    
+                if (radioButtonTree.Checked)
+                    MessageBox.Show(@"Option not available in Tree", @"Find Previous", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                else
+                    _fn.FindInTextBox(textBoxFind.Text, _defaultColor, 1);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, @"Find Previous", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
