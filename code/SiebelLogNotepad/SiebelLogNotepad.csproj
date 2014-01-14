@@ -61,6 +61,12 @@
     <Compile Include="FormNotepad.Designer.cs">
       <DependentUpon>FormNotepad.cs</DependentUpon>
     </Compile>
+    <Compile Include="forms\AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="forms\ChangeTreeLabel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,6 +94,9 @@
     </Compile>
     <EmbeddedResource Include="FormNotepad.resx">
       <DependentUpon>FormNotepad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\ChangeTreeLabel.resx">
       <DependentUpon>ChangeTreeLabel.cs</DependentUpon>
@@ -165,6 +174,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\copy.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\about.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -31,6 +31,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormNotepad));
             this.splitContainerMain = new System.Windows.Forms.SplitContainer();
             this.panelButtons = new System.Windows.Forms.Panel();
+            this.splitContainerTreeTextBox = new System.Windows.Forms.SplitContainer();
+            this.panelTreeView = new System.Windows.Forms.Panel();
+            this.treeViewSiebelTree = new System.Windows.Forms.TreeView();
+            this.splitContainerTreeTextBoxOption = new System.Windows.Forms.SplitContainer();
+            this.panelTreeTextOption = new System.Windows.Forms.Panel();
+            this.panelTextBox = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.buttonBookMarkCfg = new System.Windows.Forms.Button();
             this.buttonChangeTree = new System.Windows.Forms.Button();
             this.buttonCollapse = new System.Windows.Forms.Button();
@@ -40,16 +47,10 @@
             this.buttonIgnore = new System.Windows.Forms.Button();
             this.buttonOpenConfig = new System.Windows.Forms.Button();
             this.buttonOpenLog = new System.Windows.Forms.Button();
-            this.splitContainerTreeTextBox = new System.Windows.Forms.SplitContainer();
-            this.panelTreeView = new System.Windows.Forms.Panel();
-            this.treeViewSiebelTree = new System.Windows.Forms.TreeView();
-            this.splitContainerTreeTextBoxOption = new System.Windows.Forms.SplitContainer();
-            this.panelTreeTextOption = new System.Windows.Forms.Panel();
             this.buttonCopy = new System.Windows.Forms.Button();
             this.buttonBookMark = new System.Windows.Forms.Button();
             this.buttonGoToLine = new System.Windows.Forms.Button();
             this.buttonMarkAndFind = new System.Windows.Forms.Button();
-            this.panelTextBox = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
             this.splitContainerMain.Panel1.SuspendLayout();
             this.splitContainerMain.Panel2.SuspendLayout();
@@ -90,6 +91,7 @@
             // 
             // panelButtons
             // 
+            this.panelButtons.Controls.Add(this.button1);
             this.panelButtons.Controls.Add(this.buttonBookMarkCfg);
             this.panelButtons.Controls.Add(this.buttonChangeTree);
             this.panelButtons.Controls.Add(this.buttonCollapse);
@@ -104,105 +106,6 @@
             this.panelButtons.Name = "panelButtons";
             this.panelButtons.Size = new System.Drawing.Size(982, 29);
             this.panelButtons.TabIndex = 0;
-            // 
-            // buttonBookMarkCfg
-            // 
-            this.buttonBookMarkCfg.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonBookMarkCfg.Image = global::SiebelLogNotepad.Resources.bookmark_cfg;
-            this.buttonBookMarkCfg.Location = new System.Drawing.Point(244, 2);
-            this.buttonBookMarkCfg.Name = "buttonBookMarkCfg";
-            this.buttonBookMarkCfg.Size = new System.Drawing.Size(24, 24);
-            this.buttonBookMarkCfg.TabIndex = 9;
-            this.buttonBookMarkCfg.UseVisualStyleBackColor = true;
-            this.buttonBookMarkCfg.Click += new System.EventHandler(this.buttonBookMarkCfg_Click);
-            // 
-            // buttonChangeTree
-            // 
-            this.buttonChangeTree.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonChangeTree.Image = ((System.Drawing.Image)(resources.GetObject("buttonChangeTree.Image")));
-            this.buttonChangeTree.Location = new System.Drawing.Point(184, 2);
-            this.buttonChangeTree.Name = "buttonChangeTree";
-            this.buttonChangeTree.Size = new System.Drawing.Size(24, 24);
-            this.buttonChangeTree.TabIndex = 8;
-            this.buttonChangeTree.UseVisualStyleBackColor = true;
-            this.buttonChangeTree.Click += new System.EventHandler(this.buttonChangeTree_Click);
-            // 
-            // buttonCollapse
-            // 
-            this.buttonCollapse.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonCollapse.Image = global::SiebelLogNotepad.Resources.collapse;
-            this.buttonCollapse.Location = new System.Drawing.Point(154, 2);
-            this.buttonCollapse.Name = "buttonCollapse";
-            this.buttonCollapse.Size = new System.Drawing.Size(24, 24);
-            this.buttonCollapse.TabIndex = 7;
-            this.buttonCollapse.UseVisualStyleBackColor = true;
-            this.buttonCollapse.Click += new System.EventHandler(this.buttonCollapse_Click);
-            // 
-            // buttonExpandTree
-            // 
-            this.buttonExpandTree.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonExpandTree.Image = global::SiebelLogNotepad.Resources.expand;
-            this.buttonExpandTree.Location = new System.Drawing.Point(124, 2);
-            this.buttonExpandTree.Name = "buttonExpandTree";
-            this.buttonExpandTree.Size = new System.Drawing.Size(24, 24);
-            this.buttonExpandTree.TabIndex = 6;
-            this.buttonExpandTree.UseVisualStyleBackColor = true;
-            this.buttonExpandTree.Click += new System.EventHandler(this.buttonExpandTree_Click);
-            // 
-            // buttonRefreshTree
-            // 
-            this.buttonRefreshTree.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonRefreshTree.Image = global::SiebelLogNotepad.Resources.refresh;
-            this.buttonRefreshTree.Location = new System.Drawing.Point(94, 2);
-            this.buttonRefreshTree.Name = "buttonRefreshTree";
-            this.buttonRefreshTree.Size = new System.Drawing.Size(24, 24);
-            this.buttonRefreshTree.TabIndex = 4;
-            this.buttonRefreshTree.UseVisualStyleBackColor = true;
-            this.buttonRefreshTree.Click += new System.EventHandler(this.buttonRefreshTree_Click);
-            // 
-            // buttonStatistics
-            // 
-            this.buttonStatistics.Enabled = false;
-            this.buttonStatistics.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonStatistics.Image = global::SiebelLogNotepad.Resources.statistics;
-            this.buttonStatistics.Location = new System.Drawing.Point(214, 2);
-            this.buttonStatistics.Name = "buttonStatistics";
-            this.buttonStatistics.Size = new System.Drawing.Size(24, 24);
-            this.buttonStatistics.TabIndex = 3;
-            this.buttonStatistics.UseVisualStyleBackColor = true;
-            // 
-            // buttonIgnore
-            // 
-            this.buttonIgnore.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonIgnore.Image = global::SiebelLogNotepad.Resources.ignore;
-            this.buttonIgnore.Location = new System.Drawing.Point(64, 2);
-            this.buttonIgnore.Name = "buttonIgnore";
-            this.buttonIgnore.Size = new System.Drawing.Size(24, 24);
-            this.buttonIgnore.TabIndex = 2;
-            this.buttonIgnore.UseVisualStyleBackColor = true;
-            this.buttonIgnore.Click += new System.EventHandler(this.buttonIgnore_Click);
-            // 
-            // buttonOpenConfig
-            // 
-            this.buttonOpenConfig.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonOpenConfig.Image = global::SiebelLogNotepad.Resources.open_config;
-            this.buttonOpenConfig.Location = new System.Drawing.Point(34, 2);
-            this.buttonOpenConfig.Name = "buttonOpenConfig";
-            this.buttonOpenConfig.Size = new System.Drawing.Size(24, 24);
-            this.buttonOpenConfig.TabIndex = 1;
-            this.buttonOpenConfig.UseVisualStyleBackColor = true;
-            this.buttonOpenConfig.Click += new System.EventHandler(this.buttonOpenConfig_Click);
-            // 
-            // buttonOpenLog
-            // 
-            this.buttonOpenLog.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonOpenLog.Image = global::SiebelLogNotepad.Resources.open_log;
-            this.buttonOpenLog.Location = new System.Drawing.Point(4, 2);
-            this.buttonOpenLog.Name = "buttonOpenLog";
-            this.buttonOpenLog.Size = new System.Drawing.Size(24, 24);
-            this.buttonOpenLog.TabIndex = 0;
-            this.buttonOpenLog.UseVisualStyleBackColor = true;
-            this.buttonOpenLog.Click += new System.EventHandler(this.buttonOpenLog_Click);
             // 
             // splitContainerTreeTextBox
             // 
@@ -275,6 +178,134 @@
             this.panelTreeTextOption.Size = new System.Drawing.Size(23, 526);
             this.panelTreeTextOption.TabIndex = 0;
             // 
+            // panelTextBox
+            // 
+            this.panelTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelTextBox.Location = new System.Drawing.Point(0, 0);
+            this.panelTextBox.Name = "panelTextBox";
+            this.panelTextBox.Size = new System.Drawing.Size(576, 526);
+            this.panelTextBox.TabIndex = 0;
+            // 
+            // button1
+            // 
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Image = global::SiebelLogNotepad.Resources.about;
+            this.button1.Location = new System.Drawing.Point(274, 2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(24, 24);
+            this.button1.TabIndex = 10;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // buttonBookMarkCfg
+            // 
+            this.buttonBookMarkCfg.FlatAppearance.BorderSize = 0;
+            this.buttonBookMarkCfg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonBookMarkCfg.Image = global::SiebelLogNotepad.Resources.bookmark_cfg;
+            this.buttonBookMarkCfg.Location = new System.Drawing.Point(244, 2);
+            this.buttonBookMarkCfg.Name = "buttonBookMarkCfg";
+            this.buttonBookMarkCfg.Size = new System.Drawing.Size(24, 24);
+            this.buttonBookMarkCfg.TabIndex = 9;
+            this.buttonBookMarkCfg.UseVisualStyleBackColor = true;
+            this.buttonBookMarkCfg.Click += new System.EventHandler(this.buttonBookMarkCfg_Click);
+            // 
+            // buttonChangeTree
+            // 
+            this.buttonChangeTree.FlatAppearance.BorderSize = 0;
+            this.buttonChangeTree.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonChangeTree.Image = ((System.Drawing.Image)(resources.GetObject("buttonChangeTree.Image")));
+            this.buttonChangeTree.Location = new System.Drawing.Point(184, 2);
+            this.buttonChangeTree.Name = "buttonChangeTree";
+            this.buttonChangeTree.Size = new System.Drawing.Size(24, 24);
+            this.buttonChangeTree.TabIndex = 8;
+            this.buttonChangeTree.UseVisualStyleBackColor = true;
+            this.buttonChangeTree.Click += new System.EventHandler(this.buttonChangeTree_Click);
+            // 
+            // buttonCollapse
+            // 
+            this.buttonCollapse.FlatAppearance.BorderSize = 0;
+            this.buttonCollapse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonCollapse.Image = global::SiebelLogNotepad.Resources.collapse;
+            this.buttonCollapse.Location = new System.Drawing.Point(154, 2);
+            this.buttonCollapse.Name = "buttonCollapse";
+            this.buttonCollapse.Size = new System.Drawing.Size(24, 24);
+            this.buttonCollapse.TabIndex = 7;
+            this.buttonCollapse.UseVisualStyleBackColor = true;
+            this.buttonCollapse.Click += new System.EventHandler(this.buttonCollapse_Click);
+            // 
+            // buttonExpandTree
+            // 
+            this.buttonExpandTree.FlatAppearance.BorderSize = 0;
+            this.buttonExpandTree.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonExpandTree.Image = global::SiebelLogNotepad.Resources.expand;
+            this.buttonExpandTree.Location = new System.Drawing.Point(124, 2);
+            this.buttonExpandTree.Name = "buttonExpandTree";
+            this.buttonExpandTree.Size = new System.Drawing.Size(24, 24);
+            this.buttonExpandTree.TabIndex = 6;
+            this.buttonExpandTree.UseVisualStyleBackColor = true;
+            this.buttonExpandTree.Click += new System.EventHandler(this.buttonExpandTree_Click);
+            // 
+            // buttonRefreshTree
+            // 
+            this.buttonRefreshTree.FlatAppearance.BorderSize = 0;
+            this.buttonRefreshTree.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonRefreshTree.Image = global::SiebelLogNotepad.Resources.refresh;
+            this.buttonRefreshTree.Location = new System.Drawing.Point(94, 2);
+            this.buttonRefreshTree.Name = "buttonRefreshTree";
+            this.buttonRefreshTree.Size = new System.Drawing.Size(24, 24);
+            this.buttonRefreshTree.TabIndex = 4;
+            this.buttonRefreshTree.UseVisualStyleBackColor = true;
+            this.buttonRefreshTree.Click += new System.EventHandler(this.buttonRefreshTree_Click);
+            // 
+            // buttonStatistics
+            // 
+            this.buttonStatistics.Enabled = false;
+            this.buttonStatistics.FlatAppearance.BorderSize = 0;
+            this.buttonStatistics.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonStatistics.Image = global::SiebelLogNotepad.Resources.statistics;
+            this.buttonStatistics.Location = new System.Drawing.Point(214, 2);
+            this.buttonStatistics.Name = "buttonStatistics";
+            this.buttonStatistics.Size = new System.Drawing.Size(24, 24);
+            this.buttonStatistics.TabIndex = 3;
+            this.buttonStatistics.UseVisualStyleBackColor = true;
+            // 
+            // buttonIgnore
+            // 
+            this.buttonIgnore.FlatAppearance.BorderSize = 0;
+            this.buttonIgnore.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonIgnore.Image = global::SiebelLogNotepad.Resources.ignore;
+            this.buttonIgnore.Location = new System.Drawing.Point(64, 2);
+            this.buttonIgnore.Name = "buttonIgnore";
+            this.buttonIgnore.Size = new System.Drawing.Size(24, 24);
+            this.buttonIgnore.TabIndex = 2;
+            this.buttonIgnore.UseVisualStyleBackColor = true;
+            this.buttonIgnore.Click += new System.EventHandler(this.buttonIgnore_Click);
+            // 
+            // buttonOpenConfig
+            // 
+            this.buttonOpenConfig.FlatAppearance.BorderSize = 0;
+            this.buttonOpenConfig.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonOpenConfig.Image = global::SiebelLogNotepad.Resources.open_config;
+            this.buttonOpenConfig.Location = new System.Drawing.Point(34, 2);
+            this.buttonOpenConfig.Name = "buttonOpenConfig";
+            this.buttonOpenConfig.Size = new System.Drawing.Size(24, 24);
+            this.buttonOpenConfig.TabIndex = 1;
+            this.buttonOpenConfig.UseVisualStyleBackColor = true;
+            this.buttonOpenConfig.Click += new System.EventHandler(this.buttonOpenConfig_Click);
+            // 
+            // buttonOpenLog
+            // 
+            this.buttonOpenLog.FlatAppearance.BorderSize = 0;
+            this.buttonOpenLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonOpenLog.Image = global::SiebelLogNotepad.Resources.open_log;
+            this.buttonOpenLog.Location = new System.Drawing.Point(4, 2);
+            this.buttonOpenLog.Name = "buttonOpenLog";
+            this.buttonOpenLog.Size = new System.Drawing.Size(24, 24);
+            this.buttonOpenLog.TabIndex = 0;
+            this.buttonOpenLog.UseVisualStyleBackColor = true;
+            this.buttonOpenLog.Click += new System.EventHandler(this.buttonOpenLog_Click);
+            // 
             // buttonCopy
             // 
             this.buttonCopy.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
@@ -326,14 +357,6 @@
             this.buttonMarkAndFind.TabIndex = 5;
             this.buttonMarkAndFind.UseVisualStyleBackColor = true;
             this.buttonMarkAndFind.Click += new System.EventHandler(this.buttonMarkAndFind_Click);
-            // 
-            // panelTextBox
-            // 
-            this.panelTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelTextBox.Location = new System.Drawing.Point(0, 0);
-            this.panelTextBox.Name = "panelTextBox";
-            this.panelTextBox.Size = new System.Drawing.Size(576, 526);
-            this.panelTextBox.TabIndex = 0;
             // 
             // FormNotepad
             // 
@@ -387,6 +410,7 @@
         private System.Windows.Forms.Button buttonBookMark;
         private System.Windows.Forms.Button buttonBookMarkCfg;
         private System.Windows.Forms.Button buttonCopy;
+        private System.Windows.Forms.Button button1;
     }
 }
 

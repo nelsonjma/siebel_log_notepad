@@ -156,6 +156,10 @@ namespace SiebelLogNotepad
             // Bookmark color cfg
             ToolTip ttBookMarkCfg = new ToolTip { AutoPopDelay = 1000, InitialDelay = 1000, ReshowDelay = 500, ShowAlways = true };
             ttBookMarkCfg.SetToolTip(buttonBookMarkCfg, "Bookmark Line Color Config");
+
+            // Bookmark color cfg
+            ToolTip ttCopy = new ToolTip { AutoPopDelay = 1000, InitialDelay = 1000, ReshowDelay = 500, ShowAlways = true };
+            ttCopy.SetToolTip(buttonCopy, "Copy node text");
         }
 
         /*********************************** Go To Line / Add Color To Text ***********************************/
@@ -977,6 +981,12 @@ namespace SiebelLogNotepad
             if (_selectedNode == null) return;
 
             Clipboard.SetText(_selectedNode.Text);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            AboutBox ab = new AboutBox();
+            ab.Show();
         }
     }
 }

@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SiebelLogNotepad")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Siebel Log Notepad")]
+[assembly: AssemblyDescription("for more details go to: https://github.com/nelsonjma/siebel_log_notepad")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SiebelLogNotepad")]
-[assembly: AssemblyCopyright("Copyright ©  2013")]
+[assembly: AssemblyProduct("Siebel Log Notepad")]
+[assembly: AssemblyCopyright("MIT License")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -24,3 +24,4 @@ C:\Users\xyon\Desktop\GitHub\siebel_log_notepad\code\SiebelLogNotepad\obj\Debug\
 C:\Users\xyon\Desktop\GitHub\siebel_log_notepad\code\SiebelLogNotepad\obj\Debug\SiebelLogNotepad.Resources.resources
 C:\Users\xyon\Desktop\GitHub\siebel_log_notepad\code\SiebelLogNotepad\obj\Debug\SiebelLogNotepad.csproj.GenerateResource.Cache
 C:\Users\xyon\Desktop\GitHub\siebel_log_notepad\code\SiebelLogNotepad\obj\Debug\SiebelLogNotepad.forms.ChangeTreeLabel.resources
+C:\Users\xyon\Desktop\GitHub\siebel_log_notepad\code\SiebelLogNotepad\obj\Debug\SiebelLogNotepad.forms.AboutBox.resources
