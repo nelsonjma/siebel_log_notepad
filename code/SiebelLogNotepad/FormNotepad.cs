@@ -64,6 +64,9 @@ namespace SiebelLogNotepad
         // tree selected event
         private SiebelTreeNode _selectedNode;
 
+        // contains the information that will be loaded to the three view, this exists so that when user refreshs there is no need to load file again.
+        private SiebelTreeView _siebelTreeView;
+
         // bookmark color
         private Color _bookmarkColor;
 
@@ -102,6 +105,9 @@ namespace SiebelLogNotepad
 
             // initialize bookmark color
             _bookmarkColor = Color.DarkRed;
+
+            // set the object that contains tree nodes to null
+            _siebelTreeView = null;
         }
 
         /// <summary>
@@ -717,16 +723,9 @@ namespace SiebelLogNotepad
             {
                 if (e.Result == null) return;
 
-                SiebelTreeView stv = (SiebelTreeView) e.Result;
+                _siebelTreeView = (SiebelTreeView)e.Result;
 
-                // get icons
-                treeViewSiebelTree.ImageList = stv.LoadEventIcons();
-                
-                // add the nodes to three with ignore list and tree label information
-                treeViewSiebelTree.Nodes.Add(stv.GetTreeEvents(LoadIgnoreEvents(), LoadTreeLabel()).GetTreeNodes());
-                
-                // set treeview default icon
-                treeViewSiebelTree.SelectedImageKey = @"default.png";
+                LoadSiebelTreeView();
             }
             catch (Exception ex)
             {
@@ -830,6 +829,20 @@ namespace SiebelLogNotepad
             }
         }
 
+        private void LoadSiebelTreeView()
+        {
+            if (_siebelTreeView == null) return;
+
+            // get icons
+            treeViewSiebelTree.ImageList = _siebelTreeView.LoadEventIcons();
+
+            // add the nodes to three with ignore list and tree label information
+            treeViewSiebelTree.Nodes.Add(_siebelTreeView.GetTreeEvents(LoadIgnoreEvents(), LoadTreeLabel()).GetTreeNodes());
+
+            // set treeview default icon
+            treeViewSiebelTree.SelectedImageKey = @"default.png";
+        }
+
         /*********************************** Button Ctrls ***********************************/
         // Open Log File
         private void buttonOpenLog_Click(object sender, EventArgs e)
@@ -844,11 +857,22 @@ namespace SiebelLogNotepad
                 // if not file to show leave
                 if (string.IsNullOrEmpty(_openLogFile))
                 {
-                    MessageBox.Show(@"No file to load", @"Load Tree", MessageBoxButtons.OK, MessageBoxIcon.Warning); return;
+                    MessageBox.Show(@"No file to load", @"Load Tree", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
 
-                // Load TreeView
-                LoadTree();
+
+                if (MessageBox.Show(@"Build Tree ?", @"Open File", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    // Load TreeView
+                    LoadTree();
+                }
+                else
+                {
+                    // clean old nodes if they exists, you are opening new file, you dont want to see old tree file
+                    treeViewSiebelTree.Nodes.Clear();
+                }
+
 
                 // Load file to textbox in the end so that does not overload loading process
                 LoadFileToTextBox();
@@ -917,17 +941,25 @@ namespace SiebelLogNotepad
         // refresh current list
         private void buttonRefreshTree_Click(object sender, EventArgs e)
         {
-            // Load TreeView
-            LoadTree();
+            if (
+                MessageBox.Show(@"Yes to reload file again. No to just refresh the tree", @"Refresh",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                LoadTree(); // Load TreeView
+            else
+            {
+                // clean old nodes
+                treeViewSiebelTree.Nodes.Clear();
+
+                // fill tree with stuff
+                LoadSiebelTreeView();
+            }
+                
         }
 
         // open mark & find form
         private void buttonMarkAndFind_Click(object sender, EventArgs e)
         {
-            // if no nodes go away
-            if (treeViewSiebelTree.Nodes.Count == 0) return;
-
-            MarkAndFind maf = new MarkAndFind(this);
+            MarkAndFind maf = new MarkAndFind(this, treeViewSiebelTree.Nodes.Count == 0);
             maf.Show();
         }
 

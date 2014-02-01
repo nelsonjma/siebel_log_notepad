@@ -117,4 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAEBAAAAAAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAAAAAAAAAAAAAAAAAAAAA
+        AAAlJf//JSX//yUl//8lJf//JSX//yUl//8lJf//JSX//yUl//8lJf//JSX//yUl//8lJf//JSX//yUl
+        //8lJf//JSX//yUl//8lJf//JSX//yUl//8lJf//JSX//yUl//8lJf//JSX//yUl//8lJf//JSX//yUl
+        //8lJf//JSX//yUl//8lJf//JSX//yUl//8lJf//JSX//yUl//8lJf//JSX//yUl//8lJf//JSX//yUl
+        //8lJf//JSX//yUl//8lJf//JSX//yUl//9ra///1NT//9TU///U1P//1NT//9TU///U1P//1NT//9TU
+        //9ra///JSX//yUl//8lJf//JSX//yUl///U1P//////////////////////////////////////////
+        /////////////46O//8lJf//JSX//yUl//+Ojv///////9TU//9ra///JSX//yUl//8lJf//JSX//yUl
+        //8lJf//a2v/////////////jo7//yUl//8lJf////////////8lJf//JSX//yUl//8lJf//JSX//yUl
+        //8lJf//JSX//yUl//9ra////////9TU//8lJf//JSX////////U1P//JSX//yUl//8lJf//JSX//yUl
+        //8lJf//JSX//yUl//8lJf//JSX/////////////JSX//yUl/////////////yUl//8lJf//JSX//yUl
+        //8lJf//JSX//yUl//8lJf//JSX//yUl/////////////yUl//8lJf//1NT///////+Ojv//JSX//yUl
+        //8lJf//JSX//yUl//8lJf//JSX//yUl///U1P///////46O//8lJf//JSX//yUl//////////////Ly
+        8v/U1P//1NT//9TU///U1P//1NT//9TU//////////////////8lJf//JSX//yUl//8lJf//JSX//9TU
+        /////////////////////////////////////////////9TU//8lJf//JSX//yUl//8lJf//JSX//yUl
+        //8lJf//JSX//yUl//8lJf//JSX//yUl//8lJf//JSX//yUl//8lJf//JSX//yUl//8lJf//JSX//yUl
+        //8lJf//JSX//yUl//8lJf//JSX//yUl//8lJf//JSX//yUl//8lJf//JSX//yUl//8lJf//JSX//yUl
+        //8lJf//JSX//yUl//8lJf//JSX//yUl//8lJf//JSX//yUl//8lJf//JSX//yUl//8lJf//JSX//yUl
+        //8lJf//JSX//yUl//8lJf//JSX//yUl//8lJf//JSX//yUl//8lJf//JSX//yUl//8lJf//JSX//yUl
+        //8lJf//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA
+        //8AAP//AAD//w==
+</value>
+  </data>
 </root>

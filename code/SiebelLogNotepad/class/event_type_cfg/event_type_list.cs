@@ -20,6 +20,8 @@ class EventTypeList
                 GetInOutEvents(fileName);
 
                 GetNeutralEvents(fileName);
+
+                GetOneLineEvents(fileName);
             }
             catch (Exception)
             {
@@ -128,6 +130,55 @@ class EventTypeList
 
                         // Get event
                         EventType evtType = new NeutralEvent(level0, level1, level2Search, level2ReplaceCriteria, level2IgnoreCriteria, build, img);
+
+                        ListEvents.Add(evtType);
+                    }
+                    catch (Exception ex)
+                    {
+                        // implementar mecanismo de log
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Reading Neutral Events Xml File:" + ex.Message);
+            }
+        }
+
+        private void GetOneLineEvents(string fileName)
+        {
+            try
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(fileName);
+
+                XmlNodeList xmllList = doc.SelectNodes("/events/one_line_events/onle_line_event");
+
+                if (xmllList == null) return;
+
+                foreach (XmlNode node in xmllList)
+                {
+                    try
+                    {
+                        if (node["search"] == null || node["replace_criteria"] == null || node["ignore_criteria"] == null || node["build"] == null) continue;
+
+                        // image
+                        string img = node["image"].InnerText;
+
+                        // search criteria
+                        string search = node["search"].InnerText;
+
+                        // replace criteria
+                        string replace = node["replace_criteria"].InnerText;
+
+                        // ignore criteria
+                        string ignore = node["ignore_criteria"].InnerText;
+
+                        // BUILD OUTPUT
+                        string build = node["build"].InnerText;
+
+                        // Get event
+                        EventType evtType = new OneLineEvent(search, replace, ignore, build, img);
 
                         ListEvents.Add(evtType);
                     }

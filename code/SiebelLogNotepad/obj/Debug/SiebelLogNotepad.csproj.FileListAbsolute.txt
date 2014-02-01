@@ -15,8 +15,6 @@ C:\Users\xyon\Desktop\GitHub\siebel_log_notepad\code\SiebelLogNotepad\obj\Debug\
 C:\Users\xyon\Desktop\GitHub\siebel_log_notepad\code\SiebelLogNotepad\obj\Debug\SiebelLogNotepad.pdb
 C:\Users\xyon\Desktop\GitHub\siebel_log_notepad\code\SiebelLogNotepad\bin\Debug\SiebelLogNotepad.exe
 C:\Users\xyon\Desktop\GitHub\siebel_log_notepad\code\SiebelLogNotepad\bin\Debug\SiebelLogNotepad.pdb
-C:\Users\xyon\Desktop\GitHub\siebel_log_notepad\code\SiebelLogNotepad\bin\Debug\FastColoredTextBox.xml
-C:\Users\xyon\Desktop\GitHub\siebel_log_notepad\code\SiebelLogNotepad\obj\Debug\SiebelLogNotepad.csprojResolveAssemblyReference.cache
 C:\Users\xyon\Desktop\GitHub\siebel_log_notepad\code\SiebelLogNotepad\obj\Debug\SiebelLogNotepad.FormNotepad.resources
 C:\Users\xyon\Desktop\GitHub\siebel_log_notepad\code\SiebelLogNotepad\obj\Debug\SiebelLogNotepad.Forms.IgnoreEvents.resources
 C:\Users\xyon\Desktop\GitHub\siebel_log_notepad\code\SiebelLogNotepad\obj\Debug\SiebelLogNotepad.forms.MarkAndFind.resources
@@ -25,3 +23,4 @@ C:\Users\xyon\Desktop\GitHub\siebel_log_notepad\code\SiebelLogNotepad\obj\Debug\
 C:\Users\xyon\Desktop\GitHub\siebel_log_notepad\code\SiebelLogNotepad\obj\Debug\SiebelLogNotepad.csproj.GenerateResource.Cache
 C:\Users\xyon\Desktop\GitHub\siebel_log_notepad\code\SiebelLogNotepad\obj\Debug\SiebelLogNotepad.forms.ChangeTreeLabel.resources
 C:\Users\xyon\Desktop\GitHub\siebel_log_notepad\code\SiebelLogNotepad\obj\Debug\SiebelLogNotepad.forms.AboutBox.resources
+C:\Users\xyon\Desktop\GitHub\siebel_log_notepad\code\SiebelLogNotepad\obj\Debug\SiebelLogNotepad.csprojResolveAssemblyReference.cache

@@ -4,6 +4,8 @@ namespace EventTypeCfg
 {
     public abstract class EventType
     {
+        public string EventName { get; set; }
+
         /// <summary>
         /// Get output message
         /// </summary>
@@ -70,6 +72,8 @@ namespace EventTypeCfg
             _buildCriteria = buildCriteria;
             _img = img;
 
+            // set event name
+            EventName = "InOutEvent";
         }
 
         public override string OutMessage()
@@ -178,6 +182,9 @@ namespace EventTypeCfg
             // type of operation selector
             _level0OpType = OperationSelector(level0);
             _level1OpType = OperationSelector(level1);
+
+            // set event name
+            EventName = "NeutralEvent";
         }
 
         public override string OutMessage()
@@ -210,41 +217,6 @@ namespace EventTypeCfg
         }
 
         /*************** Private ***************/
-        /// <summary>
-        /// Compare level, but if cfg level is empty if will return true, it means that user wants that event can be any type
-        /// </summary>
-        /// <param name="tmpLevel">value in log</param>
-        /// <param name="level">value in configuration</param>
-        private static bool LevelEqualCompare(string tmpLevel, string level)
-        {
-            return level == string.Empty || String.Equals(tmpLevel, level, StringComparison.CurrentCultureIgnoreCase);
-        }
-
-        /// <summary>
-        /// Stategy equal to top but not equal its startswith
-        /// </summary>
-        private static bool LevelStartCompare(string tmpLevel, string level)
-        {
-            return level == string.Empty || tmpLevel.StartsWith(level, StringComparison.CurrentCultureIgnoreCase);
-        }
-
-        /// <summary>
-        /// Stategy equal to top but not equal its endswith
-        /// </summary>
-        private static bool LevelEndCompare(string tmpLevel, string level)
-        {
-            return level == string.Empty || tmpLevel.EndsWith(level, StringComparison.CurrentCultureIgnoreCase);
-        }
-
-        /// <summary>
-        /// Stategy equal to top but not equal its contains
-        /// </summary>
-        private static bool LevelContainsCompare(string tmpLevel, string level)
-        {
-            return level == string.Empty || tmpLevel.Contains(level);
-        }
-
-        /********* Level Operation *********/
         private int OperationSelector(string level)
         {
             if (level == string.Empty)
@@ -279,6 +251,111 @@ namespace EventTypeCfg
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Compare level, but if cfg level is empty if will return true, it means that user wants that event can be any type
+        /// </summary>
+        /// <param name="tmpLevel">value in log</param>
+        /// <param name="level">value in configuration</param>
+        private static bool LevelEqualCompare(string tmpLevel, string level)
+        {
+            return level == string.Empty || String.Equals(tmpLevel, level, StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        /// <summary>
+        /// Stategy equal to top but not equal its startswith
+        /// </summary>
+        private static bool LevelStartCompare(string tmpLevel, string level)
+        {
+            return level == string.Empty || tmpLevel.StartsWith(level, StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        /// <summary>
+        /// Stategy equal to top but not equal its endswith
+        /// </summary>
+        private static bool LevelEndCompare(string tmpLevel, string level)
+        {
+            return level == string.Empty || tmpLevel.EndsWith(level, StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        /// <summary>
+        /// Stategy equal to top but not equal its contains
+        /// </summary>
+        private static bool LevelContainsCompare(string tmpLevel, string level)
+        {
+            return level == string.Empty || tmpLevel.Contains(level);
+        }
+    }
+
+    public class OneLineEvent : EventType
+    {
+        // Temporary log levels
+        private string _tmpLine;
+
+        // image
+        private readonly string _img;
+
+        private readonly string _replaceCriteria;
+
+        private readonly string _ignoreCriteria;
+
+        private readonly string _searchCriteria;
+
+        // BUILD OUTPUT
+        private readonly string _buildCriteria;
+
+        public OneLineEvent(string searchCriteria, string replaceCriteria, string ignoreCriteria, string buildCriteria, string img)
+        {
+            _img = img;
+            _ignoreCriteria = ignoreCriteria;
+            _replaceCriteria = replaceCriteria;
+            _buildCriteria = buildCriteria;
+            _searchCriteria = searchCriteria;
+
+            // set event name
+            EventName = "OneLineEvent";
+        }
+
+        /*************** Public ***************/
+        public override string OutMessage()
+        {
+            string msg = Level2Process.ReplaceCriteria(_tmpLine, _replaceCriteria);
+
+            return _buildCriteria.Replace("{MSG}", msg);
+        }
+
+        /// <summary>
+        /// This is a line event
+        /// </summary>
+        /// <param name="line">Log line</param>
+        /// <param name="none">WTF</param>
+        /// <param name="none2">WTF</param>
+        /// <returns></returns>
+        public override bool IsEvent(string line, string none, string none2)
+        {
+            _tmpLine = line;
+
+
+
+            bool data = Level2Process.Search(line, _searchCriteria);
+            bool data2 = (Level2Process.Search(line, _ignoreCriteria) || _ignoreCriteria == string.Empty);
+
+            return Level2Process.Search(line, _searchCriteria) && 
+                (!Level2Process.Search(line, _ignoreCriteria) || _ignoreCriteria == string.Empty);
+        }
+
+        /// <summary>
+        /// Its just cosmetic there is no level to move in here
+        /// </summary>
+        public override int MoveLevel(int level)
+        {
+            return level;
+        }
+
+        public override string GetImg()
+        {
+            return _img;
         }
     }
 }

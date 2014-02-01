@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(IgnoreEvents));
             this.splitContainerMaster = new System.Windows.Forms.SplitContainer();
             this.dataGridViewIgnoreList = new System.Windows.Forms.DataGridView();
             this.buttonSave = new System.Windows.Forms.Button();
@@ -85,6 +86,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(601, 298);
             this.Controls.Add(this.splitContainerMaster);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "IgnoreEvents";
             this.Text = "Ignore Events";
             this.splitContainerMaster.Panel1.ResumeLayout(false);

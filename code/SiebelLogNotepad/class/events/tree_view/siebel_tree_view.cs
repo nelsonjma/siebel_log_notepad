@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+
 using EventTypeCfg;
 
 namespace Events.TreeView
@@ -181,6 +181,8 @@ namespace Events.TreeView
 
             try
             {
+                
+
                 FileStream fs = new FileStream(logFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                 long fileLenght = fs.Length;
                 //StreamReader sr = new StreamReader(fs, Encoding.UTF8);
@@ -205,6 +207,10 @@ namespace Events.TreeView
                 // line position storate
                 List<long> fileStartPos = new List<long> {0};
 
+                // pre loads line and event list
+                List<EventType> lineTypeList = _etl.ListEvents.Where(x => x.EventName == "OneLineEvent").ToList();
+                List<EventType> eventTypeList = _etl.ListEvents.Where(x => x.EventName != "OneLineEvent").ToList();
+
                 // get starting line positions
                 while (fs.Position < fileLenght)
                 {
@@ -228,50 +234,12 @@ namespace Events.TreeView
                     curLinePos++;
 
                     // if nothing to do leave
-                    if (curLine == null || curLine.IndexOf('\t') <= 0) continue;
+                    if (string.IsNullOrEmpty(curLine)) continue;
 
-                    string[] lineParts = curLine.Split('\t');
-
-                    // if line parts are not siebel 7 or 8 format then do nothing
-                    if (lineParts.Length != 5 && lineParts.Length != 6) continue;
-
-                    int increment = lineParts.Length == 5 ? 0 : 1;
-
-                    string logEvent     = lineParts[0];
-                    string logSubEvent  = lineParts[1];
-                    string logLevel     = lineParts[2];
-                    string logDateTime  = lineParts[3 + increment];
-                    string logMessage   = lineParts[4 + increment];
-
-                    for (int i = 0; i < _etl.ListEvents.Count; i++)
-                    {
-                        EventType etl = _etl.ListEvents[i];
-
-                        if (!etl.IsEvent(logEvent, logSubEvent, logMessage)) continue;
-
-                        // store old level value;
-                        int auxLevel = level;
-
-                        // change level if necessary
-                        level = etl.MoveLevel(level);
-
-                        string eventName = etl.OutMessage();
-
-                        EventData inOutEvt = TreeBuilder(
-                                                level, eventName, curStreamPos, curLinePos, _etl.ListEvents[i].GetImg(),
-                                                logEvent, logSubEvent, logLevel, logDateTime, logMessage
-                                                );
-
-                        // if event level is -- then get the {IN} part of the event
-                        if (auxLevel > level)
-                            AddOutToEventReference(eventName, i);
-
-                        // store the {IN} part in a QUEUE
-                        if (inOutEvt != null)
-                            AddInToEventRefereceQueue(ref inOutEvt, i);
-
-                        break;
-                    }
+                    if (curLine.IndexOf('\t') <= 0 && lineTypeList.Count > 0)       // if no tabs and if we have line types to process
+                        level = ProcessOneLineEvents(ref lineTypeList, curLine, level, curStreamPos, curLinePos);
+                    else if (curLine.IndexOf('\t') > 0 && eventTypeList.Count > 0)  // if tabs and if we have event types to process
+                        level = ProcessEvents(ref eventTypeList, curLine, level, curStreamPos, curLinePos);
 
                     // sends current log position to variable so that it can be used to get percentage
                     _eventLoadMutex.WaitOne();
@@ -379,6 +347,79 @@ namespace Events.TreeView
             _level = level;
 
             return evtPos;
+        }
+
+        /* Process Events */
+
+        /// <summary>
+        /// process events divided by tabs
+        /// </summary>
+        private int ProcessEvents(ref List<EventType> eventTypeList, string curLine, int level, long curStreamPos, int curLinePos)
+        {
+            string[] lineParts = curLine.Split('\t');
+
+            // if line parts are not siebel 7 or 8 format then do nothing
+            if (lineParts.Length != 5 && lineParts.Length != 6) return level;
+
+            int increment = lineParts.Length == 5 ? 0 : 1;
+
+            string logEvent = lineParts[0];
+            string logSubEvent = lineParts[1];
+            string logLevel = lineParts[2];
+            string logDateTime = lineParts[3 + increment];
+            string logMessage = lineParts[4 + increment];
+
+            for (int i = 0; i < eventTypeList.Count; i++)
+            {
+                EventType etl = eventTypeList[i];
+
+                if (!etl.IsEvent(logEvent, logSubEvent, logMessage)) continue;
+
+                // store old level value;
+                int auxLevel = level;
+
+                // change level if necessary
+                level = etl.MoveLevel(level);
+
+                string eventName = etl.OutMessage();
+
+                EventData eventData = TreeBuilder(
+                                        level, eventName, curStreamPos, curLinePos, etl.GetImg(),
+                                        logEvent, logSubEvent, logLevel, logDateTime, logMessage
+                                        );
+
+                // if event level is -- then get the {IN} part of the event
+                if (auxLevel > level)
+                    AddOutToEventReference(eventName, i);
+
+                // store the {IN} part in a QUEUE
+                if (eventData != null)
+                    AddInToEventRefereceQueue(ref eventData, i);
+
+                break;
+            }
+
+            return level;
+        }
+
+        /// <summary>
+        /// process the complete line
+        /// </summary>
+        private int ProcessOneLineEvents(ref List<EventType> eventTypeList, string curLine, int level, long curStreamPos, int curLinePos)
+        {
+            foreach (EventType etl in eventTypeList)
+            {
+                if (!etl.IsEvent(curLine, null, null)) continue;
+
+                string eventName = etl.OutMessage();
+                
+                TreeBuilder(
+                    level, eventName, curStreamPos, curLinePos, etl.GetImg(),
+                    string.Empty, string.Empty, string.Empty, string.Empty, curLine
+                    );
+            }
+
+            return level;
         }
 
         /* Event In/Out Ctrl */

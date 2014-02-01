@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MarkAndFind));
             this.buttonChangeColor = new System.Windows.Forms.Button();
             this.radioButtonText = new System.Windows.Forms.RadioButton();
             this.radioButtonTree = new System.Windows.Forms.RadioButton();
@@ -127,6 +128,7 @@
             this.Controls.Add(this.buttonFindNext);
             this.Controls.Add(this.buttonMarkAll);
             this.Controls.Add(this.textBoxFind);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MarkAndFind";
             this.Text = "Mark & Find";
             this.TopMost = true;

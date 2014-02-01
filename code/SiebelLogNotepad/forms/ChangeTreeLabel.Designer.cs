@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChangeTreeLabel));
             this.checkBoxProcessedText = new System.Windows.Forms.CheckBox();
             this.checkBoxLine = new System.Windows.Forms.CheckBox();
             this.checkBoxLogEvent = new System.Windows.Forms.CheckBox();
@@ -132,6 +133,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.checkBoxProcessedText);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ChangeTreeLabel";
             this.Text = "Tree Label";
             this.groupBox1.ResumeLayout(false);

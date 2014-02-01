@@ -20,7 +20,7 @@ namespace SiebelLogNotepad.forms
         // connect to notepad form to execute mark and find methods
         private readonly FormNotepad _fn;
 
-        public MarkAndFind(FormNotepad fn)
+        public MarkAndFind(FormNotepad fn, bool disableTree)
         {
             InitializeComponent();
 
@@ -35,6 +35,13 @@ namespace SiebelLogNotepad.forms
 
             // initialize selected text
             _selectedText = string.Empty;
+
+
+            // disable tree checkbox
+            if (!disableTree) return;
+            radioButtonTree.Checked = false;
+            radioButtonTree.Enabled = false;
+            radioButtonText.Checked = true;
         }
 
         /// <summary>
